@@ -365,8 +365,6 @@
  "Start a new filter from the template": "Iniciar um novo filtro a partir do modelo",
  "Starts from the saved template only ({where}: {file} - open it from the list to edit it): {parts}. Its [A] rules are regenerated for the current game data.": "Parte apenas do modelo salvo ({where}: {file} — abra-o na lista para editá-lo): {parts}. As regras [A] dele são regeneradas para os dados atuais do jogo.",
  "Switched-off rules without conditions: headings that only decorate the list.": "Regras desativadas sem condições: títulos que servem apenas para decorar a lista.",
- "Take one affix out of the open filter's rules and the Leveling, Best in slot and Idols tabs' picks at once": "Remover um afixo das regras do filtro aberto e das seleções das abas “Nivelamento”, “Best in slot” e “Ídolos” de uma só vez",
- "Takes an affix out of the open filter's rules and out of the Leveling, Best in slot and Idols tabs' picks at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Remove um afixo das regras do filtro aberto e das seleções das abas “Nivelamento”, “Best in slot” e “Ídolos” de uma só vez, para que aplicar uma aba de novo não o traga de volta. Selecione um afixo para ver todos os lugares onde ele é usado; desmarque um lugar para mantê-lo ali.",
  "Takes out this filter's section - with your own rules in it and your changes to its rules - and puts the template's in its place.": "Remove a seção deste filtro — com as suas próprias regras nela e as suas alterações nas regras dela — e coloca a do modelo no lugar.",
  "Test an item": "Testar um item",
  "Text colour": "Cor do texto",
@@ -647,6 +645,16 @@
  "← Other affix": "← Outro afixo",
  "↻ [A] rules": "↻ Regras [A]",
  "✗ shows why a rule doesn't match; rules below the one that decides are never reached.": "✗ mostra por que uma regra não corresponde; as regras abaixo daquela que decide nunca são alcançadas.",
+ "Wanted affixes": "Afixos desejados",
+ "Tick the affixes your build wants on the right, then add them to a generator tab here. Each tab takes them only where they can roll, and keeps the picks it already has.": "Marque à direita os afixos que seu build quer e adicione-os aqui a uma aba de gerador. Cada aba só os pega onde podem aparecer e mantém as seleções que já tem.",
+ "Add to all three tabs": "Adicionar às três abas",
+ "Add to the Leveling tab": "Adicionar à aba “Nivelamento”",
+ "Add to the Best in slot tab": "Adicionar à aba “Best in slot”",
+ "Add to the Idols tab": "Adicionar à aba “Ídolos”",
+ "Clear the picked affixes?": "Limpar os afixos selecionados?",
+ "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "Todos os afixos que aparecem em equipamento ou ídolos, e onde as abas de gerador podem pegá-los. Escolha aqui o que você quer uma vez só, em vez de fazer isso para cada tipo de equipamento.",
+ "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "Remover um afixo das regras do filtro aberto, das seleções das abas de gerador e dos afixos desejados de uma só vez",
+ "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Remove um afixo das regras do filtro aberto, das seleções das abas “Nivelamento”, “Best in slot” e “Ídolos” e dos afixos desejados de uma só vez, para que aplicar uma aba de novo não o traga de volta. Selecione um afixo para ver todos os lugares onde ele é usado; desmarque um lugar para mantê-lo ali.",
  "({n} set piece)|({n} set pieces)": {
   "one": "({n} peça de conjunto)",
   "other": "({n} peças de conjunto)"
@@ -751,6 +759,10 @@
   "one": "{min}+ de {n} afixo",
   "other": "{min}+ de {n} afixos"
  },
+ "{n} affix added where it can roll.|{n} affixes added where they can roll.": {
+  "one": "{n} afixo adicionado onde ele pode aparecer",
+  "other": "{n} afixos adicionados onde eles podem aparecer"
+ },
  "{n} affix|{n} affixes": {
   "one": "{n} afixo",
   "other": "{n} afixos"
@@ -794,6 +806,10 @@
  "{n} idol kind with picks; rules exist only for those.|{n} idol kinds with picks; rules exist only for those.": {
   "one": "{n} tipo de ídolo com seleções; só há regras para ele.",
   "other": "{n} tipos de ídolo com seleções; só há regras para eles."
+ },
+ "{n} idol kind|{n} idol kinds": {
+  "one": "{n} tipo de ídolo",
+  "other": "{n} tipos de ídolo"
  },
  "{n} item type|{n} item types": {
   "one": "{n} tipo de item",

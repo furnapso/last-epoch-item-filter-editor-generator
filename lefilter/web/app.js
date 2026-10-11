@@ -53,6 +53,7 @@ const S = {
   lev: { opts: null, result: null, error: null },
   idol: { opts: null, classes: null, sel: null, drawn: null, search: [], result: null, error: null },
   bis: { opts: null, sel: "weapons", search: "", result: null, error: null },
+  want: { picked: null, search: "", filter: null, index: null, pool: null },
   test: { item: null, result: null },
 };
 let M = null;
@@ -260,10 +261,14 @@ async function setLanguage(code) {
   renderLevForm(); renderLevPreview();
   renderIdolList(); renderIdolEditor();
   renderBisList(); renderBisEditor();
+  renderWantList(); renderWantEditor();
   renderTestForm(); renderTestResult();
 }
 
 function indexMeta(meta) {
+  // the Wanted affixes tab's own caches are per meta (a language brings its own copy of the game data)
+  S.want.index = null;
+  S.want.pool = null;
   M = {
     affix: new Map(meta.affixes.map((a) => [a.id, a])),
     base: new Map(meta.bases.map((b) => [b.type, b])),
@@ -992,6 +997,12 @@ function generatorAffixUses(id) {
         if (!io.altar.length) io.altar.push(NEW_ALTAR());
       } });
   }
+  // Wanted affixes: the tab's own list, which the three tabs are added from
+  if (wantPicks().includes(id)) {
+    out.push({ tab: "wanted", short: tx("Wanted affixes"), label: tx("Wanted affixes"),
+      edit: [txn(wantPicks().length, "{n} affix", "{n} affixes")], kept: [], changed: wantChanged,
+      remove: () => { S.want.picked = wantPicks().filter((x) => x !== id); } });
+  }
   return out;
 }
 
@@ -1007,10 +1018,11 @@ function generatorAffixIds() {
   const io = idolOpts();
   for (const sets of Object.values(io.picks)) for (const p of sets) p.affixes.forEach((x) => ids.add(x));
   for (const a of io.altar) a.affixes.forEach((x) => ids.add(x));
+  wantPicks().forEach((x) => ids.add(x));
   return ids;
 }
 
-const REMOVE_AFFIX_TITLE = tk("Take one affix out of the open filter's rules and the Leveling, Best in slot and Idols tabs' picks at once");
+const REMOVE_AFFIX_TITLE = tk("Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once");
 let removeAffixQuery = "";    // the dialog's filter text, kept for its next opening
 let lastRemoval = null;       // {text, undo()}: what the dialog removed last, undoable while it stays open
 
@@ -1032,7 +1044,7 @@ function removeAffixEverywhere(selected = null) {
   const ruleLabel = (r) => r.name || tx("rule {n}", { n: S.doc.rules.indexOf(r) + 1 });
   const close = h("div", { class: "row" }, h("button", { class: "primary", onclick: () => dlg.close() }, tx("Close")));
   const title = h("h3", {}, tx("Remove an affix"));
-  const intro = h("p", { class: "hint" }, tx("Takes an affix out of the open filter's rules and out of the Leveling, Best in slot and Idols tabs' picks at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there."));
+  const intro = h("p", { class: "hint" }, tx("Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there."));
   const genUses = selected !== null ? generatorAffixUses(selected) : [];
   if (selected !== null && (counts.has(selected) || genUses.length)) {
     const uses = S.doc ? affixUses(selected) : [];
@@ -1067,7 +1079,8 @@ function removeAffixEverywhere(selected = null) {
     const levelingNow = async (gens) => { if (gens.some((g) => g.tab === "leveling")) await runLeveling(); };
     btn.onclick = async () => {
       const on = new Set(places.filter((p) => p.box.checked && p.n).map((p) => p.key));
-      const snap = { leveling: structuredClone(S.lev.opts), bis: structuredClone(S.bis.opts), idols: structuredClone(S.idol.opts) };
+      const snap = { leveling: structuredClone(S.lev.opts), bis: structuredClone(S.bis.opts), idols: structuredClone(S.idol.opts),
+        wanted: [...wantPicks()] };
       const done = [];
       let ruleMark = null;
       if (on.has("rules")) {
@@ -1093,7 +1106,8 @@ function removeAffixEverywhere(selected = null) {
         undo: async () => {
           if (ruleMark != null && S.undo.length === ruleMark) undo();   // unless the rules changed again since
           for (const g of gens) {
-            if (g.tab === "leveling") S.lev.opts = snap.leveling; else if (g.tab === "bis") S.bis.opts = snap.bis; else S.idol.opts = snap.idols;
+            if (g.tab === "leveling") S.lev.opts = snap.leveling; else if (g.tab === "bis") S.bis.opts = snap.bis;
+            else if (g.tab === "wanted") S.want.picked = snap.wanted; else S.idol.opts = snap.idols;
             g.changed();
           }
           lastRemoval = null;
@@ -3634,6 +3648,256 @@ function renderBisEditor() {
     box);
 }
 
+/* ---------- wanted affixes ---------- */
+
+/** This browser's list of wanted affixes: what the generator tabs take from. */
+function wantPicks() {
+  if (!S.want.picked) S.want.picked = (store.get("wanted-affixes", []) || []).filter((id) => M.affix.has(id));
+  return S.want.picked;
+}
+function wantChanged() {
+  store.set("wanted-affixes", S.want.picked);
+  if ($("#tab-affixes")?.classList.contains("active")) { renderWantList(); renderWantEditor(); }
+}
+
+/** affix id -> {sections, slots, kinds, altar}: everywhere the generator tabs can take it. Worked out as a union
+ *  over the classes - each tab then applies it where its own class and picks take it. */
+function wantIndex() {
+  if (S.want.index) return S.want.index;
+  const idx = new Map();
+  const at = (id) => { let w = idx.get(id); if (!w) idx.set(id, w = { sections: new Set(), slots: new Set(), kinds: new Set(), altar: false }); return w; };
+  for (const cls of ["", ...S.meta.enums.classes]) {
+    const byToggle = S.meta.toggle_affixes[cls] || {};
+    for (const [s] of LEV_SECTIONS)        // a toggle only offers itself where its affixes roll
+      for (const t of S.meta.toggles)
+        if (toggleRolls(t.key, s, cls).length)
+          for (const id of byToggle[t.key] || []) at(id).sections.add(s);
+    for (const slot of S.meta.bis.slots)
+      for (const id of S.meta.bis.pools[cls]?.[slot.key] || []) at(id).slots.add(slot.key);
+  }
+  for (const cls of S.meta.enums.classes)   // the Leveling tab picks class affixes one by one, not through a toggle
+    for (const id of S.meta.class_affixes[cls] || []) {
+      const a = M.affix.get(id);
+      if (a) for (const [s] of LEV_SECTIONS) if (a.rolls_on.some((t) => sectionTypeIds(s).has(t))) at(id).sections.add(s);
+    }
+  for (const k of S.meta.idol_kinds) for (const a of k.pool) at(a.id).kinds.add(k.key);
+  if (S.meta.idol_altar) for (const a of S.meta.idol_altar.pool) at(a.id).altar = true;
+  return (S.want.index = idx);
+}
+
+/** Every affix the generator tabs can take somewhere, in the game's own picker order. */
+function wantPool() {
+  if (!S.want.pool) S.want.pool = [...S.meta.affixes].filter((a) => wantIndex().has(a.id)).sort(compareAffixes);
+  return S.want.pool;
+}
+
+/** "Helmets, Body armours · 3 idol kinds · Idol altar": where the generator tabs can take an affix. */
+function wantWhere(a) {
+  const w = wantIndex().get(a.id);
+  const parts = [];
+  const gear = whereText(new Set(a.rolls_on));
+  if (gear !== tx("no gear")) parts.push(gear);
+  if (w?.kinds.size) parts.push(w.kinds.size <= 3
+    ? [...w.kinds].map((k) => idolKind(k)?.label || k).join(", ")
+    : txn(w.kinds.size, "{n} idol kind", "{n} idol kinds"));
+  if (w?.altar) parts.push(tx("Idol altar"));
+  return parts.join(" · ");
+}
+
+/** How many picked affixes reach the tab they're added to (or any of them): what the toast counts. */
+function wantReaches(which) {
+  const idx = wantIndex();
+  const reach = (w) => which === "leveling" ? w.sections.size > 0
+    : which === "bis" ? w.slots.size > 0
+      : which === "idols" ? (w.kinds.size > 0 || w.altar)
+        : w.sections.size > 0 || w.slots.size > 0 || w.kinds.size > 0 || w.altar;
+  let n = 0;
+  for (const id of wantPicks()) { const w = idx.get(id); if (w && reach(w)) n++; }
+  return n;
+}
+
+/** Leveling: the picked affixes as the toggles covering them (the tab's ordinary gear affixes come from toggles)
+ *  and the class affixes it picks one by one. */
+function wantToLeveling() {
+  const o = levOpts(), cls = o.character_class;
+  const picked = new Set(wantPicks());
+  const byToggle = S.meta.toggle_affixes[cls] || {};
+  for (const [s] of LEV_SECTIONS) {
+    const sec = o[sectionKey(s)];
+    let attrs = false;
+    for (const [g] of TOGGLE_GROUPS) {
+      if (s === "weapons" && g === "defence" && !sec.defensive) continue;   // hidden (and unused) while defensive affixes are off
+      for (const t of S.meta.toggles) {
+        if (t.group !== g || sec[g].includes(t.key) || !toggleRolls(t.key, s, cls).length) continue;
+        if (!(byToggle[t.key] || []).some((id) => picked.has(id))) continue;
+        sec[g].push(t.key);
+        if (s === "weapons" && g === "attributes") attrs = true;
+      }
+    }
+    if (attrs) sec.attributes = ["all_attributes"];   // single ones don't roll on weapons
+  }
+  const fits = new Set(S.meta.class_affixes[cls] || []);
+  for (const id of picked) {
+    if (!fits.has(id) || (o.class_affixes || []).includes(id)) continue;
+    const a = M.affix.get(id);
+    if (!a || !LEV_SECTIONS.some(([s]) => a.rolls_on.some((t) => sectionTypeIds(s).has(t)))) continue;
+    o.class_affixes.push(id);
+    for (const [sec] of LEV_SECTIONS) unexclude(o[sectionKey(sec)], a);   // a new pick: any earlier exclusion of it goes
+  }
+  levChanged();
+}
+
+/** A BiS slot's affix pool: its class pool, for a multi-type slot only the item types it has ticked - and none
+ *  while no type is ticked (the slot is set up nowhere yet). */
+function wantBisPool(key) {
+  const meta = bisSlotMeta(key), types = Object.keys(bisOpts().slots[key]?.bases || {});
+  if (meta.types.length > 1 && !types.length) return new Set();
+  const pool = S.meta.bis.pools[bisOpts().character_class || ""]?.[key] || [];
+  if (meta.types.length < 2) return new Set(pool);
+  const ids = new Set(types.map((t) => M.base.get(t)?.id));
+  return new Set(pool.filter((id) => M.affix.get(id)?.rolls_on.some((x) => ids.has(x))));
+}
+
+/** Best in slot: the picked affixes into every slot whose item types they roll on. */
+function wantToBis() {
+  const picked = wantPicks();
+  for (const meta of S.meta.bis.slots) {
+    const pool = wantBisPool(meta.key), dest = bisSlot(meta.key);
+    dest.affixes.push(...picked.filter((id) => pool.has(id) && !dest.affixes.includes(id)));
+  }
+  bisChanged();
+}
+
+/** Idols: the picked affixes into the first ruleset of every listed idol kind (and the altar) that rolls them. */
+function wantToIdols() {
+  const o = idolOpts();
+  const picked = new Set(wantPicks());
+  for (const [, , list] of idolGroups()) for (const k of list) {
+    const pool = new Set(k.pool.map((a) => a.id));
+    const add = [...picked].filter((id) => pool.has(id));
+    if (!add.length) continue;
+    const sets = kindSets(o, k.key).map((p) => ({ ...p, affixes: [...p.affixes] }));
+    sets[0].affixes = [...new Set([...sets[0].affixes, ...add])];
+    setKindPicks(o, k.key, sets);
+  }
+  const altar = S.meta.idol_altar;
+  if (altar) {
+    const pool = new Set(altar.pool.map((a) => a.id));
+    const add = [...picked].filter((id) => pool.has(id));
+    if (add.length) o.altar[0].affixes = [...new Set([...o.altar[0].affixes, ...add])];
+  }
+  idolChanged();
+}
+
+function wantApply(which) {
+  if (!wantPicks().length) { toast(tx("Nothing to apply.")); return; }
+  if (which === "leveling" || which === "all") wantToLeveling();
+  if (which === "bis" || which === "all") wantToBis();
+  if (which === "idols" || which === "all") wantToIdols();
+  const n = wantReaches(which);
+  toast(n ? txn(n, "{n} affix added where it can roll.", "{n} affixes added where they can roll.") : tx("Nothing to apply."));
+}
+
+function renderWantList() {
+  const f = $("#affix-list");
+  if (!f) return;
+  f.replaceChildren();
+  const picks = wantPicks();
+  const remove = (id) => { S.want.picked = wantPicks().filter((x) => x !== id); wantChanged(); };
+  put(f, h("h3", {}, tx("Affixes ({n} picked)", { n: picks.length })),
+    h("p", { class: "hint" }, tx("Tick the affixes your build wants on the right, then add them to a generator tab here. "
+      + "Each tab takes them only where they can roll, and keeps the picks it already has.")),
+    picks.length ? h("div", { class: "selected-list" }, groupedChips(picks, (id) => withAffixTip(h("span", { class: "chip on" },
+      affixName(id), affixPill(id), h("button", { title: tx("remove"), onclick: () => { hideTip(); remove(id); } }, "×")),
+    M.affix.get(id)))) : h("p", { class: "hint" }, tx("Nothing picked yet")),
+    h("div", { class: "row" },
+      h("button", { class: "primary", disabled: !picks.length, onclick: () => wantApply("all") }, tx("Add to all three tabs"))),
+    h("div", { class: "row" },
+      h("button", { disabled: !picks.length, onclick: () => wantApply("leveling") }, tx("Add to the Leveling tab")),
+      h("button", { disabled: !picks.length, onclick: () => wantApply("bis") }, tx("Add to the Best in slot tab")),
+      h("button", { disabled: !picks.length, onclick: () => wantApply("idols") }, tx("Add to the Idols tab"))),
+    h("div", { class: "row" },
+      h("button", { disabled: !picks.length, onclick: () => { if (confirm(tx("Clear the picked affixes?"))) { S.want.picked = []; wantChanged(); } } },
+        tx("Clear picks")),
+      affixClipboardRow(picks, tx("Wanted affixes"), (ids) => {
+        const pool = new Set(wantPool().map((a) => a.id));
+        const add = ids.filter((id) => pool.has(id) && !picks.includes(id));
+        S.want.picked.push(...add);
+        toast(txn(add.length, "{n} affix pasted.", "{n} affixes pasted."));
+        wantChanged();
+      }, () => renderWantList())));
+}
+
+function renderWantEditor() {
+  const p = $("#affix-editor");
+  if (!p) return;
+  const top = p.scrollTop;   // the same list redrawn: stay where it was
+  drawWantEditor(p);
+  p.scrollTop = top;
+}
+
+function drawWantEditor(p) {
+  const pool = wantPool();
+  const picked = new Set(wantPicks());
+  const save = (redraw) => { store.set("wanted-affixes", S.want.picked); renderWantList(); if (redraw) renderWantEditor(); };
+  const toggle = (id) => {
+    const list = wantPicks();
+    const i = list.indexOf(id);
+    if (i >= 0) list.splice(i, 1); else list.push(id);
+    picked.has(id) ? picked.delete(id) : picked.add(id);
+    save();   // the checkbox has already flipped itself: no redraw, so the list keeps its place
+  };
+  const take = (shown, on) => {
+    const list = wantPicks();
+    for (const a of shown) {
+      const has = picked.has(a.id);
+      if (on && !has) { list.push(a.id); picked.add(a.id); }
+      else if (!on && has) { list.splice(list.indexOf(a.id), 1); picked.delete(a.id); }
+    }
+    save(true);
+  };
+  const groups = new Map();
+  for (const a of pool) {
+    const g = affixGroup(a);
+    if (!groups.has(g)) groups.set(g, []);
+    groups.get(g).push(a);
+  }
+  const box = h("div", {});
+  const search = h("input", { type: "search", placeholder: tx("Filter affixes…"), style: { flex: 1 }, value: S.want.search || "" });
+  const f = (S.want.filter ||= newAffixFilter());
+  const draw = () => {
+    const q = search.value.trim().toLowerCase();
+    S.want.search = search.value;
+    box.replaceChildren();
+    const lists = f.sort === "name"
+      ? [["", [...pool].filter(affixShownBy(f)).sort((x, y) => x.name.localeCompare(y.name))]]
+      : [...groups].filter(([g]) => !f.cats.size || f.cats.has(g));
+    for (const [g, list] of lists) {
+      const shown = list.filter((a) => !q || [a.name, a.en_name, a.internal_name, affixName(a.id)]
+        .some((x) => (x || "").toLowerCase().includes(q)));
+      if (!shown.length) continue;
+      put(box, h("div", { class: "pool-group" },
+        g ? h("div", { class: "grp-head" }, h("span", {}, `${g} (${list.length})`), h("span", { class: "spacer" }),
+          h("button", { onclick: () => take(shown, true) }, tx("all")),
+          h("button", { onclick: () => take(shown, false) }, tx("none"))) : null,
+        h("div", { class: "pool-cols" }, shown.map((a) => h("label", {},
+          h("input", { type: "checkbox", checked: picked.has(a.id), onchange: () => toggle(a.id) }),
+          affixName(a.id), affixPill(a), affixValueCell(a),
+          h("span", { class: "where" }, wantWhere(a)))))));
+    }
+    if (!box.children.length) put(box, h("p", { class: "hint" }, tx("No affix matches.")));
+  };
+  search.addEventListener("input", draw);
+  draw();
+  fill(p, h("div", { class: "box sticky" },
+    h("h2", { style: { margin: "4px 0" } }, tx("Affixes")),
+    h("p", { class: "hint" }, tx("Every affix that rolls on gear or idols, and where the generator tabs can take it. "
+      + "Pick what you want once here instead of once per kind of gear.")),
+    h("div", { class: "row" }, search),
+    affixFilterBar(f, pool, draw)),
+  box);
+}
+
 /* ---------- item tester ---------- */
 
 function testItem() {
@@ -3771,6 +4035,7 @@ function switchTab(name) {
   if (name === "test") { renderTestForm(); runTest(); }
   if (name === "idols") { renderIdolList(); renderIdolEditor(); idolsSoon(); }
   if (name === "bis") { renderBisList(); renderBisEditor(); bisSoon(); }
+  if (name === "affixes") { renderWantList(); renderWantEditor(); }   // purely the browser's own list: no server call
   if (name === "rules") { renderList(); renderEditor(); }   // e.g. the paste button after copying elsewhere
 }
 

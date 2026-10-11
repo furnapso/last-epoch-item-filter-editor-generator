@@ -365,8 +365,6 @@
  "Start a new filter from the template": "从模板新建过滤器",
  "Starts from the saved template only ({where}: {file} - open it from the list to edit it): {parts}. Its [A] rules are regenerated for the current game data.": "仅从已保存的模板开始（{where}：{file}——从列表中打开即可编辑）：{parts}。其 [A] 规则会按当前游戏数据重新生成。",
  "Switched-off rules without conditions: headings that only decorate the list.": "已关闭且无条件的规则：仅用于装饰列表的标题。",
- "Take one affix out of the open filter's rules and the Leveling, Best in slot and Idols tabs' picks at once": "一次性从当前过滤器的规则以及“练级”“最佳装备”“神像”标签页的选择中移除一个词缀",
- "Takes an affix out of the open filter's rules and out of the Leveling, Best in slot and Idols tabs' picks at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "一次性将某个词缀从当前过滤器的规则以及“练级”“最佳装备”“神像”标签页的选择中移除，这样再次应用标签页也不会把它带回来。选择一个词缀可查看所有用到它的地方；取消勾选某处即可将其保留在那里。",
  "Takes out this filter's section - with your own rules in it and your changes to its rules - and puts the template's in its place.": "移除此过滤器的该部分（包括其中你自己的规则以及你对其规则的修改），并换上模板的版本。",
  "Test an item": "测试物品",
  "Text colour": "文字颜色",
@@ -647,6 +645,16 @@
  "← Other affix": "← 其他词缀",
  "↻ [A] rules": "↻ [A] 规则",
  "✗ shows why a rule doesn't match; rules below the one that decides are never reached.": "✗ 表示规则不匹配的原因；决定结果的规则之下的规则永远不会被检查。",
+ "Wanted affixes": "想要的词缀",
+ "Tick the affixes your build wants on the right, then add them to a generator tab here. Each tab takes them only where they can roll, and keeps the picks it already has.": "在右侧勾选你的构筑想要的词缀，然后在这里把它们添加到某个生成器标签页。每个标签页只会在能出它们的地方采用，并保留已有的选择。",
+ "Add to all three tabs": "添加到三个标签页",
+ "Add to the Leveling tab": "添加到“练级”标签页",
+ "Add to the Best in slot tab": "添加到“最佳装备”标签页",
+ "Add to the Idols tab": "添加到“神像”标签页",
+ "Clear the picked affixes?": "清空已选词缀？",
+ "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "所有能出现在装备或神像上的词缀，以及各生成器标签页能在哪些地方采用它们。在这里选一次即可，不必按每种装备分别选择。",
+ "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "一次性从当前过滤器的规则、各生成器标签页的选择以及想要的词缀中移除一个词缀",
+ "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "一次性将某个词缀从当前过滤器的规则、“练级”“最佳装备”“神像”标签页的选择以及想要的词缀中移除，这样再次应用标签页也不会把它带回来。选择一个词缀可查看所有用到它的地方；取消勾选某处即可将其保留在那里。",
  "({n} set piece)|({n} set pieces)": {
   "other": "（{n}件）"
  },
@@ -725,6 +733,9 @@
  "{min}+ of {n} affix|{min}+ of {n} affixes": {
   "other": "{n} 条词缀中至少 {min} 条"
  },
+ "{n} affix added where it can roll.|{n} affixes added where they can roll.": {
+  "other": "已在能出它们的地方添加 {n} 条词缀"
+ },
  "{n} affix|{n} affixes": {
   "other": "{n} 条词缀"
  },
@@ -757,6 +768,9 @@
  },
  "{n} idol kind with picks; rules exist only for those.|{n} idol kinds with picks; rules exist only for those.": {
   "other": "{n} 种神像已有选择；只为这些生成规则。"
+ },
+ "{n} idol kind|{n} idol kinds": {
+  "other": "{n} 种神像"
  },
  "{n} item type|{n} item types": {
   "other": "{n} 种物品类型"

@@ -64,6 +64,8 @@ on Windows and `~/.local/share/last-epoch-item-filter-editor` on Linux.
   potential.
 - **[Idols and Idol Altars generator](#idols-and-idol-altars-generator)**: per idol size and class, every affix
   that can roll on it; plus your preferred idol altars and altar affixes.
+- **[Wanted affixes](#wanted-affixes)**: one list of every affix across all kinds of gear, idols and
+  altars; tick your build's once and one button puts it into the Leveling, Best in slot and Idols tabs.
 - After a patch, **↻ [A] rules** refreshes the generated rules with new and changed uniques.
 
 ## Running from source
@@ -257,9 +259,10 @@ finger doesn't click.
   filter's section, with its own rules and changes, gives way to the template's). A filter
   without the section gets the whole of it, after the BiS section. Ctrl+Z undoes it.
 - **Remove an affix…** (Rules tab, and on each generator tab) takes one affix out of the open
-  filter's rules and the Leveling, Best in slot and Idols tabs' picks at once, so applying a tab
-  again doesn't bring it back: pick it from the affixes listed anywhere (with where each is
-  used), see every place it goes from - untick any to leave it there - and remove. A rule
+  filter's rules, the Leveling, Best in slot and Idols tabs' picks and the Wanted affixes list at
+  once, so applying a tab again doesn't bring it back: pick it from the affixes listed anywhere
+  (with where each is used), see every place it goes from - untick any to leave it there - and
+  remove. A rule
   listing only that affix keeps it (an empty list would take any affix); one asking for more
   affixes than it has left asks for what's left. The Leveling tab leaves it out of the kinds of
   gear that take it (tick it there to bring it back); a BiS slot with bases keeps its only
@@ -284,6 +287,7 @@ finger doesn't click.
 - **Leveling generator**: see [below](#leveling-section); *Apply* puts the section into
   the open filter.
 - **Idols and Idol Altars generator**: see [below](#idols-and-idol-altars-generator).
+- **Wanted affixes**: see [below](#wanted-affixes); the three buttons put the list into the tabs.
 - **Test an item**: describe an item (type, base, rarity, unique, affixes with tiers,
   LP/WW, corruption) and a character level; it shows the ground label the filter gives
   it and, for every rule, whether it matches and why not. Matching follows the game's
@@ -505,6 +509,35 @@ thrown out of the inventory is shown like the idol it was made from.
 group). The rule shows those altars with at least one of those affixes, with a beam; leave
 either list empty to take any altar or any affix; it takes extra rulesets like the idol kinds. Below
 them a plainer rule shows every other altar (can be switched off).
+
+## Wanted affixes
+
+The *Wanted affixes* tab (between *Idols and Idol Altars generator* and *Test an item*) holds one
+list for the three generators instead of one pick per kind of gear, per BiS slot and per idol kind.
+On the right is every affix in the game that rolls on gear or on idols, grouped like the in-game
+picker and searchable, each line saying where the tabs can take it ("Helmets, Body armours · 3 idol
+kinds · Idol altar"); quick filters and *all* / *none* per category tick a whole group at once, and
+*Copy affixes* / *Paste affixes* move the list elsewhere. Tick what your build wants, then on the
+left:
+
+- **Add to all three tabs** does the three below at once, or use one of the other buttons on its
+  own.
+- **Add to the Leveling tab** ticks, per kind of gear, the toggles whose affixes are wanted (the
+  tab's ordinary gear affixes come from its toggles), and adds the wanted class affixes to *class
+  affixes* - class by class, the tab's own class decides. Weapons only take the Defence toggles
+  when *Include defensive affixes* is on there, and a single attribute becomes *All Attributes*
+  on weapons, as in the tab itself.
+- **Add to the Best in slot tab** adds them to every slot whose item types they roll on, for the
+  slot's class: a multi-type slot (Weapons, Off-hand) only for the item types you ticked, and one
+  with no type ticked yet is left alone.
+- **Add to the Idols tab** adds them to the first ruleset of every listed kind of idol (it is
+  created if the kind has none) and to your preferred altar affixes.
+
+Nothing is taken out and nothing is replaced: the tabs keep the picks they already have, an affix
+is only ever added where it can roll, and the toast says how many of the picked affixes reach that
+tab. The list is this browser's own, like the other tabs' picks, so it is there after a reload;
+*Remove an affix…* takes an affix out of it too - untick its *Wanted affixes* place to leave it
+there, which stops applying a tab from bringing it back.
 
 ## Tests
 

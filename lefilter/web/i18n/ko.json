@@ -365,8 +365,6 @@
  "Start a new filter from the template": "템플릿으로 새 필터 시작",
  "Starts from the saved template only ({where}: {file} - open it from the list to edit it): {parts}. Its [A] rules are regenerated for the current game data.": "저장된 템플릿만으로 시작합니다({where}: {file} - 편집하려면 목록에서 여세요): {parts}. 템플릿의 [A] 규칙은 현재 게임 데이터에 맞춰 다시 생성됩니다.",
  "Switched-off rules without conditions: headings that only decorate the list.": "조건이 없는 꺼진 규칙: 목록을 꾸미기만 하는 제목입니다.",
- "Take one affix out of the open filter's rules and the Leveling, Best in slot and Idols tabs' picks at once": "열린 필터의 규칙과 레벨링, 최고 장비, 신상 탭의 선택 항목에서 접사 하나를 한 번에 제거",
- "Takes an affix out of the open filter's rules and out of the Leveling, Best in slot and Idols tabs' picks at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "열린 필터의 규칙과 레벨링, 최고 장비, 신상 탭의 선택 항목에서 접사를 한 번에 제거하므로, 탭을 다시 적용해도 되살아나지 않습니다. 접사를 선택하면 그 접사가 사용되는 모든 곳이 표시되며, 체크를 해제한 곳에는 그대로 남습니다.",
  "Takes out this filter's section - with your own rules in it and your changes to its rules - and puts the template's in its place.": "이 필터의 해당 섹션(직접 넣은 규칙과 규칙 수정 사항 포함)을 빼고 그 자리에 템플릿의 섹션을 넣습니다.",
  "Test an item": "아이템 테스트",
  "Text colour": "이름표 색상",
@@ -647,6 +645,16 @@
  "← Other affix": "← 다른 접사",
  "↻ [A] rules": "↻ [A] 규칙",
  "✗ shows why a rule doesn't match; rules below the one that decides are never reached.": "✗는 규칙이 일치하지 않는 이유를 보여 줍니다. 결정한 규칙보다 아래의 규칙에는 도달하지 않습니다.",
+ "Wanted affixes": "원하는 접사",
+ "Tick the affixes your build wants on the right, then add them to a generator tab here. Each tab takes them only where they can roll, and keeps the picks it already has.": "오른쪽에서 빌드에 필요한 접사를 선택한 다음 여기서 생성기 탭에 추가하세요. 각 탭은 접사가 붙는 곳에만 적용하고, 이미 가진 선택은 그대로 둡니다.",
+ "Add to all three tabs": "세 탭 모두에 추가",
+ "Add to the Leveling tab": "레벨링 탭에 추가",
+ "Add to the Best in slot tab": "최고 장비 탭에 추가",
+ "Add to the Idols tab": "신상 탭에 추가",
+ "Clear the picked affixes?": "선택한 접사를 해제하시겠습니까?",
+ "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "장비나 신상에 붙는 모든 접사와 생성기 탭이 적용할 수 있는 곳입니다. 장비 종류마다 선택하는 대신 여기서 한 번만 고르세요.",
+ "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "열린 필터의 규칙, 생성기 탭의 선택 항목, 원하는 접사에서 접사 하나를 한 번에 제거",
+ "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "열린 필터의 규칙, 레벨링·최고 장비·신상 탭의 선택 항목, 원하는 접사에서 접사를 한 번에 제거하므로, 탭을 다시 적용해도 되살아나지 않습니다. 접사를 선택하면 그 접사가 사용되는 모든 곳이 표시되며, 체크를 해제한 곳에는 그대로 남습니다.",
  "({n} set piece)|({n} set pieces)": {
   "other": "(세트 아이템 {n}개)"
  },
@@ -725,6 +733,9 @@
  "{min}+ of {n} affix|{min}+ of {n} affixes": {
   "other": "접사 {n}개 중 {min}개 이상"
  },
+ "{n} affix added where it can roll.|{n} affixes added where they can roll.": {
+  "other": "적용 가능한 곳에 접사 {n}개를 추가했습니다"
+ },
  "{n} affix|{n} affixes": {
   "other": "접사 {n}개"
  },
@@ -757,6 +768,9 @@
  },
  "{n} idol kind with picks; rules exist only for those.|{n} idol kinds with picks; rules exist only for those.": {
   "other": "선택 항목이 있는 신상 종류 {n}개. 규칙은 그 종류에만 있습니다."
+ },
+ "{n} idol kind|{n} idol kinds": {
+  "other": "신상 종류 {n}개"
  },
  "{n} item type|{n} item types": {
   "other": "아이템 유형 {n}개"

@@ -27,6 +27,7 @@
   <button data-tab="leveling" data-t>Leveling generator</button>
   <button data-tab="bis" data-t>Best in slot</button>
   <button data-tab="idols" data-t>Idols and Idol Altars generator</button>
+  <button data-tab="affixes" data-t>Wanted affixes</button>
   <button data-tab="test" data-t>Test an item</button>
   <div class="spacer"></div>
   <button id="hdr-icon" data-t-title title="Filter icon and colour (shown in the game's filter list)"></button>
@@ -45,7 +46,7 @@
           <button id="btn-down" data-t-title title="Move down">▼</button>
           <button id="btn-refresh" data-t-title title="Regenerate the generated [A] rules (unique/set groups, class hide rules, always-show affixes) from config.toml and the current game data. Keeps their on/off state and filled build slots." data-t>↻ [A] rules</button>
           <button id="btn-free" data-t-title title="Free rule slots: remove decorative separators, campaign leveling rules or the rules for the most common low-level uniques" data-t>Free up rules…</button>
-          <button id="btn-remove-affix" data-t-title title="Take one affix out of the open filter's rules and the Leveling, Best in slot and Idols tabs' picks at once" data-t>Remove an affix…</button>
+          <button id="btn-remove-affix" data-t-title title="Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once" data-t>Remove an affix…</button>
           <button id="btn-complete" data-t-title title="Add the new-filter template's sections this filter lacks: BiS, exalted and legendary, class hide, shatter, hide everything else" data-t>Add missing sections…</button>
           <button id="btn-restore-exalted" data-t-title title="Put the new-filter template's exalted &amp; legendary section (exalted, corrupted and legendary rules) back into this filter: add the rules it lacks, or replace them all" data-t>Restore exalted section…</button>
           <button id="btn-reorder" data-t-title title="Move the generated sections back to their places: the unique &amp; set rules right above the leveling section (else the bottom hide-everything rule), BiS rules under the BiS header, the idol section right before the uniques, the leveling section above the bottom hide-everything rule, then the shatter section and the class hide rules to the top, right below the always-show rules" data-t>Reorder generated sections</button>
@@ -83,6 +84,13 @@
     <div class="split">
       <div class="pane form-pane" id="idol-list"></div>
       <div class="pane" id="idol-editor"></div>
+    </div>
+  </section>
+
+  <section id="tab-affixes" class="tab">
+    <div class="split">
+      <div class="pane form-pane" id="affix-list"></div>
+      <div class="pane" id="affix-editor"></div>
     </div>
   </section>
 

@@ -365,8 +365,6 @@
  "Start a new filter from the template": "テンプレートから新しいフィルターを作成",
  "Starts from the saved template only ({where}: {file} - open it from the list to edit it): {parts}. Its [A] rules are regenerated for the current game data.": "保存済みのテンプレートのみを元に作成します（{where}：{file} - 編集するには一覧から開いてください）：{parts}。その[A]ルールは現在のゲームデータに合わせて再生成されます。",
  "Switched-off rules without conditions: headings that only decorate the list.": "条件のない無効なルール：一覧を飾るだけの見出しです。",
- "Take one affix out of the open filter's rules and the Leveling, Best in slot and Idols tabs' picks at once": "開いているフィルターのルールと、「レベル上げ」「ベスト・イン・スロット」「偶像」タブの選択項目から、1つのアフィックスを一度に削除",
- "Takes an affix out of the open filter's rules and out of the Leveling, Best in slot and Idols tabs' picks at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "開いているフィルターのルールと、「レベル上げ」「ベスト・イン・スロット」「偶像」タブの選択項目からアフィックスを一度に削除するため、タブを再度適用しても戻りません。アフィックスを選ぶと、使われている場所がすべて表示されます。残したい場所はチェックを外してください。",
  "Takes out this filter's section - with your own rules in it and your changes to its rules - and puts the template's in its place.": "このフィルターのセクション（その中の独自のルールや、ルールへの変更も含む）を取り除き、代わりにテンプレートのセクションを入れます。",
  "Test an item": "アイテムをテスト",
  "Text colour": "文字色",
@@ -647,6 +645,16 @@
  "← Other affix": "← 他のアフィックス",
  "↻ [A] rules": "↻ [A]ルール",
  "✗ shows why a rule doesn't match; rules below the one that decides are never reached.": "✗はルールが一致しない理由を示します。結果を決めたルールより下のルールには到達しません。",
+ "Wanted affixes": "欲しいアフィックス",
+ "Tick the affixes your build wants on the right, then add them to a generator tab here. Each tab takes them only where they can roll, and keeps the picks it already has.": "右側でビルドに欲しいアフィックスを選び、ここからジェネレータータブに追加します。各タブはそれが付く場所にだけ取り込み、これまでの選択はそのまま残ります。",
+ "Add to all three tabs": "3つのタブすべてに追加",
+ "Add to the Leveling tab": "「レベル上げ」タブに追加",
+ "Add to the Best in slot tab": "「ベスト・イン・スロット」タブに追加",
+ "Add to the Idols tab": "「偶像」タブに追加",
+ "Clear the picked affixes?": "選択したアフィックスをクリアしますか？",
+ "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "装備や偶像に付くアフィックスすべてと、ジェネレータータブがそれを取り込める場所です。装備の種類ごとではなく、ここで一度に選べます。",
+ "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "開いているフィルターのルール、ジェネレータータブの選択項目、そして欲しいアフィックスから、1つのアフィックスを一度に削除",
+ "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "開いているフィルターのルール、「レベル上げ」「ベスト・イン・スロット」「偶像」タブの選択項目、そして欲しいアフィックスからアフィックスを一度に削除するため、タブを再度適用しても戻りません。アフィックスを選ぶと、使われている場所がすべて表示されます。残したい場所はチェックを外してください。",
  "({n} set piece)|({n} set pieces)": {
   "other": "（{n}点セット）"
  },
@@ -725,6 +733,9 @@
  "{min}+ of {n} affix|{min}+ of {n} affixes": {
   "other": "{n}個のアフィックスのうち{min}個以上"
  },
+ "{n} affix added where it can roll.|{n} affixes added where they can roll.": {
+  "other": "付く場所に{n}個のアフィックスを追加しました"
+ },
  "{n} affix|{n} affixes": {
   "other": "アフィックス{n}個"
  },
@@ -757,6 +768,9 @@
  },
  "{n} idol kind with picks; rules exist only for those.|{n} idol kinds with picks; rules exist only for those.": {
   "other": "選択項目のある偶像の種類は{n}種類です。ルールはそれらにのみ作られます。"
+ },
+ "{n} idol kind|{n} idol kinds": {
+  "other": "偶像の種類{n}個"
  },
  "{n} item type|{n} item types": {
   "other": "アイテムタイプ{n}種類"

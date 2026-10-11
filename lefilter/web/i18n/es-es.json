@@ -365,8 +365,6 @@
  "Start a new filter from the template": "Empezar un filtro nuevo a partir de la plantilla",
  "Starts from the saved template only ({where}: {file} - open it from the list to edit it): {parts}. Its [A] rules are regenerated for the current game data.": "Parte solo de la plantilla guardada ({where}: {file}; ábrela desde la lista para editarla): {parts}. Sus reglas [A] se regeneran con los datos actuales del juego.",
  "Switched-off rules without conditions: headings that only decorate the list.": "Reglas desactivadas sin condiciones: encabezados que solo sirven para decorar la lista.",
- "Take one affix out of the open filter's rules and the Leveling, Best in slot and Idols tabs' picks at once": "Quitar un afijo de las reglas del filtro abierto y de las selecciones de las pestañas «Subida de nivel», «Mejor por ranura» e «Ídolos» a la vez",
- "Takes an affix out of the open filter's rules and out of the Leveling, Best in slot and Idols tabs' picks at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Quita un afijo de las reglas del filtro abierto y de las selecciones de las pestañas «Subida de nivel», «Mejor por ranura» e «Ídolos» a la vez, para que volver a aplicar una pestaña no lo traiga de vuelta. Elige un afijo para ver dónde se usa; desmarca un sitio para dejarlo ahí.",
  "Takes out this filter's section - with your own rules in it and your changes to its rules - and puts the template's in its place.": "Quita la sección de este filtro (con tus propias reglas y tus cambios en sus reglas) y pone en su lugar la de la plantilla.",
  "Test an item": "Probar un objeto",
  "Text colour": "Color del texto",
@@ -647,6 +645,16 @@
  "← Other affix": "← Otro afijo",
  "↻ [A] rules": "↻ Reglas [A]",
  "✗ shows why a rule doesn't match; rules below the one that decides are never reached.": "✗ muestra por qué una regla no coincide; las reglas que están por debajo de la que decide nunca se tienen en cuenta.",
+ "Wanted affixes": "Afijos deseados",
+ "Tick the affixes your build wants on the right, then add them to a generator tab here. Each tab takes them only where they can roll, and keeps the picks it already has.": "Marca a la derecha los afijos que necesita tu build y añádelos aquí a una pestaña de generador. Cada pestaña solo los toma donde pueden aparecer y conserva las selecciones que ya tiene.",
+ "Add to all three tabs": "Añadir a las tres pestañas",
+ "Add to the Leveling tab": "Añadir a la pestaña «Subida de nivel»",
+ "Add to the Best in slot tab": "Añadir a la pestaña «Mejor por ranura»",
+ "Add to the Idols tab": "Añadir a la pestaña «Ídolos»",
+ "Clear the picked affixes?": "¿Borrar los afijos seleccionados?",
+ "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "Todos los afijos que aparecen en equipo o en ídolos, y dónde pueden tomarlos las pestañas de generador. Elige aquí lo que quieres una sola vez en lugar de hacerlo por cada tipo de equipo.",
+ "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "Quitar un afijo de las reglas del filtro abierto, de las selecciones de las pestañas de generador y de los afijos deseados a la vez",
+ "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Quita un afijo de las reglas del filtro abierto, de las selecciones de las pestañas «Subida de nivel», «Mejor por ranura» e «Ídolos» y de los afijos deseados a la vez, para que volver a aplicar una pestaña no lo traiga de vuelta. Elige un afijo para ver dónde se usa; desmarca un sitio para dejarlo ahí.",
  "({n} set piece)|({n} set pieces)": {
   "one": "({n} pieza de conjunto)",
   "other": "({n} piezas de conjunto)"
@@ -751,6 +759,10 @@
   "one": "{min}+ de {n} afijo",
   "other": "{min}+ de {n} afijos"
  },
+ "{n} affix added where it can roll.|{n} affixes added where they can roll.": {
+  "one": "{n} afijo añadido donde puede aparecer",
+  "other": "{n} afijos añadidos donde pueden aparecer"
+ },
  "{n} affix|{n} affixes": {
   "one": "{n} afijo",
   "other": "{n} afijos"
@@ -794,6 +806,10 @@
  "{n} idol kind with picks; rules exist only for those.|{n} idol kinds with picks; rules exist only for those.": {
   "one": "{n} tipo de ídolo con selecciones; solo hay reglas para él.",
   "other": "{n} tipos de ídolo con selecciones; solo hay reglas para ellos."
+ },
+ "{n} idol kind|{n} idol kinds": {
+  "one": "{n} tipo de ídolo",
+  "other": "{n} tipos de ídolo"
  },
  "{n} item type|{n} item types": {
   "one": "{n} tipo de objeto",

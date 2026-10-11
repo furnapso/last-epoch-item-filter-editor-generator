@@ -365,8 +365,6 @@
  "Start a new filter from the template": "Einen neuen Filter aus der Vorlage beginnen",
  "Starts from the saved template only ({where}: {file} - open it from the list to edit it): {parts}. Its [A] rules are regenerated for the current game data.": "Beginnt nur mit der gespeicherten Vorlage ({where}: {file} – zum Bearbeiten aus der Liste öffnen): {parts}. Ihre [A]-Regeln werden für die aktuellen Spieldaten neu erstellt.",
  "Switched-off rules without conditions: headings that only decorate the list.": "Ausgeschaltete Regeln ohne Bedingungen: Überschriften, die die Liste nur gliedern.",
- "Take one affix out of the open filter's rules and the Leveling, Best in slot and Idols tabs' picks at once": "Ein Affix auf einmal aus den Regeln des geöffneten Filters und der Auswahl der Tabs Leveling, Best in Slot und Götzen entfernen",
- "Takes an affix out of the open filter's rules and out of the Leveling, Best in slot and Idols tabs' picks at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Entfernt ein Affix auf einmal aus den Regeln des geöffneten Filters und aus der Auswahl der Tabs Leveling, Best in Slot und Götzen, sodass erneutes Anwenden eines Tabs es nicht zurückbringt. Wähle ein Affix, um zu sehen, wo es überall verwendet wird; entferne den Haken bei einem Ort, um es dort zu lassen.",
  "Takes out this filter's section - with your own rules in it and your changes to its rules - and puts the template's in its place.": "Entfernt den Abschnitt dieses Filters – mit deinen eigenen Regeln und deinen Änderungen daran – und ersetzt ihn durch die Vorlage.",
  "Test an item": "Gegenstand testen",
  "Text colour": "Textfarbe",
@@ -647,6 +645,16 @@
  "← Other affix": "← Anderes Affix",
  "↻ [A] rules": "↻ [A] Regeln",
  "✗ shows why a rule doesn't match; rules below the one that decides are never reached.": "✗ zeigt, warum eine Regel nicht passt; Regeln unter der entscheidenden werden nie erreicht.",
+ "Wanted affixes": "Gewünschte Affixe",
+ "Tick the affixes your build wants on the right, then add them to a generator tab here. Each tab takes them only where they can roll, and keeps the picks it already has.": "Kreuze rechts die Affixe an, die dein Build braucht, und füge sie dann hier einem Generator-Tab hinzu. Jeder Tab nimmt sie nur dort, wo sie vorkommen können, und behält seine bisherige Auswahl.",
+ "Add to all three tabs": "Allen drei Tabs hinzufügen",
+ "Add to the Leveling tab": "Zum Leveling-Tab hinzufügen",
+ "Add to the Best in slot tab": "Zum Tab „Best in Slot“ hinzufügen",
+ "Add to the Idols tab": "Zum Götzen-Tab hinzufügen",
+ "Clear the picked affixes?": "Die ausgewählten Affixe leeren?",
+ "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "Jedes Affix, das auf Ausrüstung oder Götzen vorkommt, und wo die Generator-Tabs es hinnehmen können. Wähle hier einmal aus, was du willst, statt es für jede Ausrüstungsart einzeln zu tun.",
+ "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "Ein Affix auf einmal aus den Regeln des geöffneten Filters, aus der Auswahl der Generator-Tabs und aus den gewünschten Affixen entfernen",
+ "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Entfernt ein Affix auf einmal aus den Regeln des geöffneten Filters, aus der Auswahl der Tabs Leveling, Best in Slot und Götzen und aus den gewünschten Affixen, sodass erneutes Anwenden eines Tabs es nicht zurückbringt. Wähle ein Affix, um zu sehen, wo es überall verwendet wird; entferne den Haken bei einem Ort, um es dort zu lassen.",
  "({n} set piece)|({n} set pieces)": {
   "one": "({n} Set-Teil)",
   "other": "({n} Set-Teile)"
@@ -751,6 +759,10 @@
   "one": "{min}+ von {n} Affix",
   "other": "{min}+ von {n} Affixen"
  },
+ "{n} affix added where it can roll.|{n} affixes added where they can roll.": {
+  "one": "{n} Affix hinzugefügt, wo es vorkommen kann",
+  "other": "{n} Affixe hinzugefügt, wo sie vorkommen können"
+ },
  "{n} affix|{n} affixes": {
   "one": "{n} Affix",
   "other": "{n} Affixe"
@@ -794,6 +806,10 @@
  "{n} idol kind with picks; rules exist only for those.|{n} idol kinds with picks; rules exist only for those.": {
   "one": "{n} Götzenart mit Auswahl; nur dafür gibt es Regeln.",
   "other": "{n} Götzenarten mit Auswahl; nur dafür gibt es Regeln."
+ },
+ "{n} idol kind|{n} idol kinds": {
+  "one": "{n} Götzenart",
+  "other": "{n} Götzenarten"
  },
  "{n} item type|{n} item types": {
   "one": "{n} Gegenstandstyp",

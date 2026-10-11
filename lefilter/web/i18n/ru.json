@@ -366,8 +366,6 @@
  "Start a new filter from the template": "Создать новый фильтр на основе шаблона",
  "Starts from the saved template only ({where}: {file} - open it from the list to edit it): {parts}. Its [A] rules are regenerated for the current game data.": "Создаётся только из сохранённого шаблона ({where}: {file} — откройте его из списка, чтобы изменить): {parts}. Его правила [A] пересоздаются по текущим данным игры.",
  "Switched-off rules without conditions: headings that only decorate the list.": "Выключенные правила без условий: заголовки, которые только украшают список.",
- "Take one affix out of the open filter's rules and the Leveling, Best in slot and Idols tabs' picks at once": "Убрать один аффикс сразу из правил открытого фильтра и из выбора на вкладках «Прокачка», «Лучшее в слоте» и «Идолы»",
- "Takes an affix out of the open filter's rules and out of the Leveling, Best in slot and Idols tabs' picks at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Убирает аффикс сразу из правил открытого фильтра и из выбора на вкладках «Прокачка», «Лучшее в слоте» и «Идолы», чтобы повторное применение вкладки не вернуло его. Выберите аффикс, чтобы увидеть все места, где он используется; снимите отметку с места, чтобы оставить его там.",
  "Takes out this filter's section - with your own rules in it and your changes to its rules - and puts the template's in its place.": "Убирает раздел этого фильтра — вместе с вашими правилами в нём и вашими изменениями его правил — и ставит на его место раздел шаблона.",
  "Test an item": "Проверить предмет",
  "Text colour": "Цвет текста",
@@ -648,6 +646,16 @@
  "← Other affix": "← Другой аффикс",
  "↻ [A] rules": "↻ Правила [A]",
  "✗ shows why a rule doesn't match; rules below the one that decides are never reached.": "✗ показывает, почему правило не сработало; до правил ниже решающего дело не доходит.",
+ "Wanted affixes": "Желаемые аффиксы",
+ "Tick the affixes your build wants on the right, then add them to a generator tab here. Each tab takes them only where they can roll, and keeps the picks it already has.": "Отметьте справа аффиксы, которые нужны вашей сборке, затем добавьте их здесь на вкладку генератора. Каждая вкладка берёт их только там, где они могут выпасть, и сохраняет уже сделанный выбор.",
+ "Add to all three tabs": "Добавить на все три вкладки",
+ "Add to the Leveling tab": "Добавить на вкладку «Прокачка»",
+ "Add to the Best in slot tab": "Добавить на вкладку «Лучшее в слоте»",
+ "Add to the Idols tab": "Добавить на вкладку «Идолы»",
+ "Clear the picked affixes?": "Очистить выбранные аффиксы?",
+ "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "Все аффиксы, которые выпадают на снаряжении или идолах, и то, где их могут взять вкладки генератора. Выберите здесь один раз, что вам нужно, вместо того чтобы делать это для каждого вида снаряжения.",
+ "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "Убрать один аффикс сразу из правил открытого фильтра, из выбора на вкладках генератора и из желаемых аффиксов",
+ "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Убирает аффикс сразу из правил открытого фильтра, из выбора на вкладках «Прокачка», «Лучшее в слоте» и «Идолы» и из желаемых аффиксов, чтобы повторное применение вкладки не вернуло его. Выберите аффикс, чтобы увидеть все места, где он используется; снимите отметку с места, чтобы оставить его там.",
  "({n} set piece)|({n} set pieces)": {
   "one": "({n} предмет набора)",
   "few": "({n} предмета набора)",
@@ -804,6 +812,12 @@
   "many": "{min}+ из {n} аффиксов",
   "other": "{min}+ из {n} аффиксов"
  },
+ "{n} affix added where it can roll.|{n} affixes added where they can roll.": {
+  "one": "{n} аффикс добавлен туда, где он может выпасть",
+  "few": "{n} аффикса добавлено туда, где они могут выпасть",
+  "many": "{n} аффиксов добавлено туда, где они могут выпасть",
+  "other": "{n} аффиксов добавлено туда, где они могут выпасть"
+ },
  "{n} affix|{n} affixes": {
   "one": "{n} аффикс",
   "few": "{n} аффикса",
@@ -869,6 +883,12 @@
   "few": "{n} вида идолов с выбором; правила создаются только для них.",
   "many": "{n} видов идолов с выбором; правила создаются только для них.",
   "other": "{n} видов идолов с выбором; правила создаются только для них."
+ },
+ "{n} idol kind|{n} idol kinds": {
+  "one": "{n} вид идолов",
+  "few": "{n} вида идолов",
+  "many": "{n} видов идолов",
+  "other": "{n} видов идолов"
  },
  "{n} item type|{n} item types": {
   "one": "{n} тип предмета",

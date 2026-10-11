@@ -238,6 +238,9 @@ a { color: var(--gold); }
 .pool-group label { display: flex; gap: 6px; align-items: center; padding: 1px 0; font-size: 13px; }
 .pool-cols { columns: 2; column-gap: 18px; }
 .pool-cols label { break-inside: avoid; }
+/* the Wanted affixes tab: where each affix can go under its name, so the row wraps to a second line */
+#affix-editor .pool-cols label { flex-wrap: wrap; }
+#affix-editor .pool-cols label .where { flex: 1 0 100%; color: var(--muted); font-size: 11px; }
 .sticky { position: sticky; top: -10px; z-index: 2; }
 /* an idol kind's / the altar's rulesets: one bordered block each, foldable to a line or two */
 .ruleset { border: 1px solid var(--gold-dim); border-radius: 6px; padding: 6px 10px 8px; margin: 10px 0; background: var(--panel); }

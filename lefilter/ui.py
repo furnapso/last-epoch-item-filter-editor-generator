@@ -144,6 +144,10 @@ class Api:
                 a["id"] for c in gamedata.CLASSES for a in class_affixes(replace(opts, character_class=c), d["affixes"])[0]))
         except ConfigError:
             pass
+        # the Leveling tab's toggles, worked out once per class: the item types each rolls on (which kinds of
+        # gear offer it) and the affixes it picks (the Wanted affixes tab works a toggle back out from an affix)
+        toggle_picks = {c: toggle_affixes({}, d["affixes"], c, [t.key for t in TOGGLES])
+                        for c in ("", *gamedata.CLASSES)}
         return {
             "game_version": d.get("game_version"),
             "palette": d["palette"],
@@ -170,9 +174,11 @@ class Api:
             "leveling_defaults": defaults,
             "class_affixes": {c: [a["id"] for a in class_affix_choices(d["affixes"], c)] for c in gamedata.CLASSES},
             # per class ("" = none): toggle -> the base type ids its affixes roll on (which sections offer it)
-            "toggle_rolls_on": {c: {k: sorted({i for a in v for i in a["rolls_on"]}) for k, v in
-                                    toggle_affixes({}, d["affixes"], c, [t.key for t in TOGGLES]).items()}
-                                for c in ("", *gamedata.CLASSES)},
+            "toggle_rolls_on": {c: {k: sorted({i for a in v for i in a["rolls_on"]}) for k, v in picks.items()}
+                                for c, picks in toggle_picks.items()},
+            # the same picks as affix ids: the Wanted affixes tab ticks the toggles covering an affix it's given
+            "toggle_affixes": {c: {k: [a["id"] for a in v] for k, v in picks.items()}
+                               for c, picks in toggle_picks.items()},
             "sections": {s: {"key": key, "types": types} for s, (key, types) in SECTIONS.items()},
             # set id -> {name, items, bonuses}: the picker's group by set, set items' tooltips
             "sets": {s["id"]: {"name": s["name"], "items": s.get("items", []), "bonuses": s.get("bonuses", [])} for s in d.get("sets", [])},

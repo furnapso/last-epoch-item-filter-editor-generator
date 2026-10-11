@@ -368,8 +368,6 @@
  "Start a new filter from the template": "Utwórz nowy filtr z szablonu",
  "Starts from the saved template only ({where}: {file} - open it from the list to edit it): {parts}. Its [A] rules are regenerated for the current game data.": "Zaczyna tylko od zapisanego szablonu ({where}: {file} – otwórz go z listy, żeby go edytować): {parts}. Jego reguły [A] są generowane ponownie dla aktualnych danych gry.",
  "Switched-off rules without conditions: headings that only decorate the list.": "Wyłączone reguły bez warunków: nagłówki, które tylko ozdabiają listę.",
- "Take one affix out of the open filter's rules and the Leveling, Best in slot and Idols tabs' picks at once": "Usuń jeden afiks naraz z reguł otwartego filtra i z wyboru w zakładkach „Levelowanie”, „Best in slot” i „Posążki”",
- "Takes an affix out of the open filter's rules and out of the Leveling, Best in slot and Idols tabs' picks at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Usuwa afiks naraz z reguł otwartego filtra i z wyboru w zakładkach „Levelowanie”, „Best in slot” i „Posążki”, więc ponowne zastosowanie zakładki go nie przywróci. Wybierz afiks, żeby zobaczyć wszystkie miejsca, w których jest używany; odznacz dowolne miejsce, żeby go tam zostawić.",
  "Takes out this filter's section - with your own rules in it and your changes to its rules - and puts the template's in its place.": "Usuwa tę sekcję filtra – razem z twoimi własnymi regułami w niej i twoimi zmianami w jej regułach – i wstawia w jej miejsce sekcję z szablonu.",
  "Test an item": "Sprawdź przedmiot",
  "Text colour": "Kolor tekstu",
@@ -650,6 +648,16 @@
  "← Other affix": "← Inny afiks",
  "↻ [A] rules": "↻ Reguły [A]",
  "✗ shows why a rule doesn't match; rules below the one that decides are never reached.": "✗ pokazuje, dlaczego reguła nie pasuje; reguły poniżej tej, która decyduje, nigdy nie są sprawdzane.",
+ "Wanted affixes": "Pożądane afiksy",
+ "Tick the affixes your build wants on the right, then add them to a generator tab here. Each tab takes them only where they can roll, and keeps the picks it already has.": "Zaznacz po prawej afiksy, których potrzebuje twój build, a potem dodaj je tutaj do zakładki generatora. Każda zakładka bierze je tylko tam, gdzie mogą wystąpić, i zachowuje dotychczasowy wybór.",
+ "Add to all three tabs": "Dodaj do trzech zakładek",
+ "Add to the Leveling tab": "Dodaj do zakładki „Levelowanie”",
+ "Add to the Best in slot tab": "Dodaj do zakładki „Best in slot”",
+ "Add to the Idols tab": "Dodaj do zakładki „Posążki”",
+ "Clear the picked affixes?": "Wyczyścić wybrane afiksy?",
+ "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "Każdy afiks, który występuje na ekwipunku lub posążkach, i gdzie zakładki generatora mogą go wziąć. Wybierz tutaj raz, czego chcesz, zamiast robić to dla każdego rodzaju ekwipunku.",
+ "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "Usuń jeden afiks naraz z reguł otwartego filtra, z wyboru w zakładkach generatora i z wybranych afiksów",
+ "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Usuwa afiks naraz z reguł otwartego filtra, z wyboru w zakładkach „Levelowanie”, „Best in slot” i „Posążki” oraz z wybranych afiksów, więc ponowne zastosowanie zakładki go nie przywróci. Wybierz afiks, żeby zobaczyć wszystkie miejsca, w których jest używany; odznacz dowolne miejsce, żeby go tam zostawić.",
  "({n} set piece)|({n} set pieces)": {
   "one": "({n} element zestawu)",
   "few": "({n} elementy zestawu)",
@@ -806,6 +814,12 @@
   "many": "{min}+ z {n} afiksów",
   "other": "{min}+ z {n} afiksów"
  },
+ "{n} affix added where it can roll.|{n} affixes added where they can roll.": {
+  "one": "{n} afiks dodany tam, gdzie może wystąpić",
+  "few": "{n} afiksy dodane tam, gdzie mogą wystąpić",
+  "many": "{n} afiksów dodanych tam, gdzie mogą wystąpić",
+  "other": "{n} afiksów dodanych tam, gdzie mogą wystąpić"
+ },
  "{n} affix|{n} affixes": {
   "one": "{n} afiks",
   "few": "{n} afiksy",
@@ -871,6 +885,12 @@
   "few": "{n} rodzaje posążków z wyborem; reguły powstają tylko dla nich.",
   "many": "{n} rodzajów posążków z wyborem; reguły powstają tylko dla nich.",
   "other": "{n} rodzajów posążków z wyborem; reguły powstają tylko dla nich."
+ },
+ "{n} idol kind|{n} idol kinds": {
+  "one": "{n} rodzaj posążka",
+  "few": "{n} rodzaje posążków",
+  "many": "{n} rodzajów posążków",
+  "other": "{n} rodzajów posążków"
  },
  "{n} item type|{n} item types": {
   "one": "{n} typ przedmiotu",
