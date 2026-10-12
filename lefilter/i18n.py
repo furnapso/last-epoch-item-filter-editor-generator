@@ -92,6 +92,14 @@ UI_GAME_TERMS: dict[str, str | tuple[str, str]] = {
     "Dodge": "StatsPanel_Defenses_Dodge_Label", "Block": "GameGuide_Panel_Block_Tab", "Ward": "GameGuide_Panel_Ward_Tab",
     "Movement speed": ("StatsPanel_MainStats_MoveSpeed_Name", "Movement Speed"), "Minion": ("StatsPanel_Tabs_Minion", "minion"),
     "Damage over time": ("StatsPanel_DamageStats_IncreasedDamageOverTime_Name", "Damage Over Time"),
+    # ailments and what a build is called by (the Wanted affixes tab's concept chips)
+    "Ailments": "GameGuide_Panel_Ailments_Category_Tab", "Bleed": "GameGuide_Panel_Bleed_Tab",
+    "Ignite": "GameGuide_Panel_Ignite_Tab", "Chill": "GameGuide_Panel_Chill_Tab", "Freeze": "GameGuide_Panel_Freeze_Tab",
+    "Slow": "GameGuide_Panel_Slow_Tab", "Frailty": "GameGuide_Panel_Frailty_Tab", "Shock": "GameGuide_Panel_Shock_Tab",
+    "Blind": "GameGuide_Panel_Blind_Tab", "Electrify": "GameGuide_Panel_Electrify_Tab",
+    "Armor Shred": "GameGuide_Panel_ArmourShred_Tab", "Health Leech": "GameGuide_Panel_HealthLeech_Tab",
+    "Health Regeneration": "StatsPanel_MainStats_HealthRegen_Name",
+    "All Attributes": "QuestReward_AllAtributes_Label",
     # non-equipment flags (as the game's loot filter names them)
     "All Glyphs": _LF + "GlyphCondition_AllGlyphs", "All Runes": _LF + "RuneCondition_AllRunes",
     "All Shards": (_LF + "NonEquippableCondition_AllShards", "All shards"),

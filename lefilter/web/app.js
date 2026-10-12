@@ -3691,6 +3691,78 @@ function wantPool() {
   return S.want.pool;
 }
 
+/** One item type the class may equip: at least one of its bases isn't kept to another class (the game
+ *  keeps bows to Rogues). No class chosen, or a class the data doesn't know: every type fits. */
+function typeFitsClass(t, cls) {
+  const b = M.base.get(t);
+  if (!b) return false;
+  const i = cls ? S.meta.enums.classes.indexOf(cls) : -1;
+  if (i < 0) return true;
+  const bit = 1 << i;
+  return b.subtypes.some((s) => !s.class || (s.class & bit));
+}
+
+/** The build the chips judge by: the class and the item types the Leveling and Best in slot tabs have
+ *  chosen. What they've chosen tells both ways - ticked Daggers say no to bows - but a kind of gear
+ *  they've chosen nothing from yet isn't held against the build: it may use every type of it, so a
+ *  build that never said which weapons it takes isn't told off for them. */
+function wantBuild() {
+  const lev = levOpts(), bis = bisOpts(), cls = lev.character_class || bis.character_class || "";
+  const chosen = new Set(), slots = levSlots(lev);
+  const decided = { weapons: false, offhands: false };
+  const take = (t) => { const b = M.base.get(t); if (b) chosen.add(b.id); };
+  const say = (list, kind) => { if (list.some((t) => M.base.has(t))) decided[kind] = true; };
+  for (const [s] of LEV_SECTIONS) for (const t of slots[s] || []) take(t);
+  say(slots.weapons, "weapons"); say(slots.offhands, "offhands");
+  for (const meta of S.meta.bis.slots) {
+    const picked = meta.types.length > 1 ? Object.keys(bis.slots[meta.key]?.bases || {}) : meta.types;
+    picked.forEach(take);
+    if (meta.key === "weapons") say(picked, "weapons");
+    if (meta.key === "offhand") say(picked, "offhands");
+  }
+  // What the class may use of a kind of gear with nothing chosen from it yet. The weapons are what rules
+  // an affix out: the game writes an off-hand half for the weapons it goes with (a quiver for a bow), so
+  // ticked Daggers say no to a bow affix even though it also rolls on quivers - while an off-hand the
+  // build never picked neither brings an affix in nor keeps one out of it.
+  const free = new Set(), rejected = new Set();
+  for (const t of S.meta.enums.weapons) {
+    const b = M.base.get(t);
+    if (!b) continue;
+    if (decided.weapons) { if (!chosen.has(b.id)) rejected.add(b.id); }
+    else if (typeFitsClass(t, cls)) free.add(b.id);
+  }
+  if (!decided.offhands)
+    for (const t of S.meta.enums.offhands) {
+      const b = M.base.get(t);
+      if (b && typeFitsClass(t, cls)) free.add(b.id);
+    }
+  return { cls, chosen, free, rejected };
+}
+
+/** The pool's affixes this build can use: its class allows them, and their gear is something it wears -
+ *  a type it's chosen, or - where it has chosen nothing of that kind - anything the class may use of it,
+ *  as long as its weapons haven't ruled it out. An idol affix fits on an idol kind the Idols tab works
+ *  with (or the idol altar). */
+function wantFitting() {
+  const b = wantBuild(), idx = wantIndex(), classes = S.meta.enums.classes;
+  const kinds = new Set(idolGroups().flatMap(([, , list]) => list.map((k) => k.key)));
+  const bit = b.cls ? (1 << (classes.indexOf(b.cls) + 1)) | 1 : 0;   // the affix class bits, one past the item ones
+  const gearFits = (rolls) => rolls.some((t) => b.chosen.has(t))   // it rolls on something the build wears
+    || (rolls.some((t) => b.free.has(t)) && !rolls.some((t) => b.rejected.has(t)));
+  const fit = new Set();
+  for (const a of wantPool()) {
+    if (b.cls) {
+      const cat = (a.category || "").replace(/ Idols$/, "");   // "Rogue" and "Rogue Idols" are the Rogue's own
+      if (classes.includes(cat) && cat !== b.cls) continue;
+      if (a.class && !(a.class & bit)) continue;
+    }
+    if (gearFits(a.rolls_on)) { fit.add(a.id); continue; }
+    const w = idx.get(a.id);
+    if (w && (w.altar || [...w.kinds].some((k) => kinds.has(k)))) fit.add(a.id);
+  }
+  return fit;
+}
+
 /** "Helmets, Body armours · 3 idol kinds · Idol altar": where the generator tabs can take an affix. */
 function wantWhere(a) {
   const w = wantIndex().get(a.id);
@@ -3798,6 +3870,28 @@ function wantApply(which) {
   toast(n ? txn(n, "{n} affix added where it can roll.", "{n} affixes added where they can roll.") : tx("Nothing to apply."));
 }
 
+/** The chip bar: a whole kind of affix at once. A chip's count is what the build can use of it - ticking
+ *  adds those and leaves the rest (which don't fit the build) alone; they're greyed in the list below. */
+function wantChips(fit, flip) {
+  const picked = new Set(wantPicks()), pool = new Set(wantPool().map((a) => a.id));
+  const rows = [];
+  for (const g of S.meta.concept_groups || []) {
+    const chips = (S.meta.concepts || []).filter((c) => c.group === g.key).map((c) => {
+      const all = c.affixes.filter((id) => pool.has(id));
+      const on = all.filter((id) => fit.has(id)), off = all.length - on.length;
+      const taken = on.length && on.every((id) => picked.has(id));
+      const chip = chipToggle(tx(c.label), taken, on.length ? () => flip(on, taken) : null, String(on.length));
+      if (off) chip.title = txn(off, "{n} of {total} doesn't fit your build",
+        "{n} of {total} don't fit your build", { n: off, total: all.length });
+      if (!on.length) chip.classList.add("misfit");   // the build can use none of it: nothing to tick
+      return chip;
+    });
+    if (chips.length) rows.push(h("div", { class: "concept-group" }, h("span", { class: "grp" }, tx(g.label)),
+      h("div", { class: "chips" }, chips)));
+  }
+  return rows;
+}
+
 function renderWantList() {
   const f = $("#affix-list");
   if (!f) return;
@@ -3839,7 +3933,13 @@ function renderWantEditor() {
 function drawWantEditor(p) {
   const pool = wantPool();
   const picked = new Set(wantPicks());
-  const save = (redraw) => { store.set("wanted-affixes", S.want.picked); renderWantList(); if (redraw) renderWantEditor(); };
+  const fit = wantFitting();   // what this build can use: the chips take those, the list greys the rest
+  const chips = h("div", { class: "concept-bar" });
+  const save = (redraw) => {
+    store.set("wanted-affixes", S.want.picked);
+    renderWantList();
+    if (redraw) renderWantEditor(); else fill(chips, wantChips(fit, flip));
+  };
   const toggle = (id) => {
     const list = wantPicks();
     const i = list.indexOf(id);
@@ -3853,6 +3953,16 @@ function drawWantEditor(p) {
       const has = picked.has(a.id);
       if (on && !has) { list.push(a.id); picked.add(a.id); }
       else if (!on && has) { list.splice(list.indexOf(a.id), 1); picked.delete(a.id); }
+    }
+    save(true);
+  };
+  /** One chip: every affix of its kind the build can use, picked or not as a whole. */
+  const flip = (ids, on) => {
+    const list = wantPicks();
+    for (const id of ids) {
+      const has = picked.has(id);
+      if (on && has) { list.splice(list.indexOf(id), 1); picked.delete(id); }
+      else if (!on && !has) { list.push(id); picked.add(id); }
     }
     save(true);
   };
@@ -3880,19 +3990,24 @@ function drawWantEditor(p) {
         g ? h("div", { class: "grp-head" }, h("span", {}, `${g} (${list.length})`), h("span", { class: "spacer" }),
           h("button", { onclick: () => take(shown, true) }, tx("all")),
           h("button", { onclick: () => take(shown, false) }, tx("none"))) : null,
-        h("div", { class: "pool-cols" }, shown.map((a) => h("label", {},
+        h("div", { class: "pool-cols" }, shown.map((a) => h("label", { class: fit.has(a.id) ? null : "nofit" },
           h("input", { type: "checkbox", checked: picked.has(a.id), onchange: () => toggle(a.id) }),
           affixName(a.id), affixPill(a), affixValueCell(a),
-          h("span", { class: "where" }, wantWhere(a)))))));
+          h("span", { class: "where" }, [wantWhere(a), fit.has(a.id) ? null : tx("not for your build")]
+            .filter(Boolean).join(" · ")))))));
     }
     if (!box.children.length) put(box, h("p", { class: "hint" }, tx("No affix matches.")));
   };
   search.addEventListener("input", draw);
+  fill(chips, wantChips(fit, flip));
   draw();
   fill(p, h("div", { class: "box sticky" },
     h("h2", { style: { margin: "4px 0" } }, tx("Affixes")),
     h("p", { class: "hint" }, tx("Every affix that rolls on gear or idols, and where the generator tabs can take it. "
       + "Pick what you want once here instead of once per kind of gear.")),
+    h("p", { class: "hint" }, tx("Tick a whole kind of affix to add it at once; what doesn't fit your build "
+      + "is greyed and left out.")),
+    chips,
     h("div", { class: "row" }, search),
     affixFilterBar(f, pool, draw)),
   box);

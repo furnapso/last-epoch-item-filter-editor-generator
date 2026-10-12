@@ -656,6 +656,9 @@
  "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "Все аффиксы, которые выпадают на снаряжении или идолах, и то, где их могут взять вкладки генератора. Выберите здесь один раз, что вам нужно, вместо того чтобы делать это для каждого вида снаряжения.",
  "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "Убрать один аффикс сразу из правил открытого фильтра, из выбора на вкладках генератора и из желаемых аффиксов",
  "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Убирает аффикс сразу из правил открытого фильтра, из выбора на вкладках «Прокачка», «Лучшее в слоте» и «Идолы» и из желаемых аффиксов, чтобы повторное применение вкладки не вернуло его. Выберите аффикс, чтобы увидеть все места, где он используется; снимите отметку с места, чтобы оставить его там.",
+ "Elemental": "Стихийное",
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out.": "Отметьте целый вид аффиксов, чтобы добавить их сразу; то, что не подходит вашей сборке, затемнено и не берётся.",
+ "not for your build": "не для вашей сборки",
  "({n} set piece)|({n} set pieces)": {
   "one": "({n} предмет набора)",
   "few": "({n} предмета набора)",
@@ -1015,5 +1018,11 @@
   "few": "{n} уже были там",
   "many": "{n} уже были там",
   "other": "{n} уже были там"
+ },
+ "{n} of {total} doesn't fit your build|{n} of {total} don't fit your build": {
+  "one": "{n} из {total} не подходит вашей сборке",
+  "few": "{n} из {total} не подходят вашей сборке",
+  "many": "{n} из {total} не подходят вашей сборке",
+  "other": "{n} из {total} не подходят вашей сборке"
  }
 }

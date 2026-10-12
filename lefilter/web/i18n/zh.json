@@ -655,6 +655,9 @@
  "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "所有能出现在装备或神像上的词缀，以及各生成器标签页能在哪些地方采用它们。在这里选一次即可，不必按每种装备分别选择。",
  "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "一次性从当前过滤器的规则、各生成器标签页的选择以及想要的词缀中移除一个词缀",
  "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "一次性将某个词缀从当前过滤器的规则、“练级”“最佳装备”“神像”标签页的选择以及想要的词缀中移除，这样再次应用标签页也不会把它带回来。选择一个词缀可查看所有用到它的地方；取消勾选某处即可将其保留在那里。",
+ "Elemental": "元素",
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out.": "勾选一整类词缀即可一次全部添加；不符合你构筑的会灰显并被排除。",
+ "not for your build": "不适合你的构筑",
  "({n} set piece)|({n} set pieces)": {
   "other": "（{n}件）"
  },
@@ -834,5 +837,8 @@
  },
  "{n} was there already|{n} were there already": {
   "other": "{n} 条已存在"
+ },
+ "{n} of {total} doesn't fit your build|{n} of {total} don't fit your build": {
+  "other": "{total} 个中有 {n} 个不适合你的构筑"
  }
 }

@@ -264,9 +264,11 @@ def spaced(name: str) -> str:
 
 def server_labels() -> set[str]:
     from lefilter import bis, gamedata
+    from lefilter.concepts import CONCEPTS, CONCEPT_GROUPS
     from lefilter.leveling import TOGGLES
     cap = lambda s: s[:1] + s[1:].lower()
     out = {t.label for t in TOGGLES} | {label for _, label, _ in bis.SLOTS}
+    out |= {c.label for c in CONCEPTS} | {label for _, label in CONCEPT_GROUPS}
     out |= {cap(x) for x in (*gamedata.RARITIES, "SHOW", "HIDE")} | {cap(re.sub("^VERY", "VERY ", x)) for x in gamedata.BEAM_SIZES}
     out |= set(gamedata.CLASSES) | set(gamedata.FACTION_LABELS.values())
     out |= {re.sub(r"([a-z])([A-Z])", r"\1 \2", x) for x in (*gamedata.CORRUPTION, *gamedata.SEALED_TYPES)}

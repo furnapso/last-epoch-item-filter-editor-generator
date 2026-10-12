@@ -655,6 +655,9 @@
  "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "装備や偶像に付くアフィックスすべてと、ジェネレータータブがそれを取り込める場所です。装備の種類ごとではなく、ここで一度に選べます。",
  "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "開いているフィルターのルール、ジェネレータータブの選択項目、そして欲しいアフィックスから、1つのアフィックスを一度に削除",
  "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "開いているフィルターのルール、「レベル上げ」「ベスト・イン・スロット」「偶像」タブの選択項目、そして欲しいアフィックスからアフィックスを一度に削除するため、タブを再度適用しても戻りません。アフィックスを選ぶと、使われている場所がすべて表示されます。残したい場所はチェックを外してください。",
+ "Elemental": "エレメンタル",
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out.": "種類ごとのアフィックスをすべて一度に追加できます。ビルドに合わないものは薄く表示され、追加されません。",
+ "not for your build": "ビルドに合わない",
  "({n} set piece)|({n} set pieces)": {
   "other": "（{n}点セット）"
  },
@@ -834,5 +837,8 @@
  },
  "{n} was there already|{n} were there already": {
   "other": "{n}個はすでにありました"
+ },
+ "{n} of {total} doesn't fit your build|{n} of {total} don't fit your build": {
+  "other": "{total}個中{n}個がビルドに合いません"
  }
 }

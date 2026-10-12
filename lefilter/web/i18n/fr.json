@@ -656,6 +656,9 @@
  "Every affix that rolls on gear or idols, and where the generator tabs can take it. Pick what you want once here instead of once per kind of gear.": "Tous les affixes qui apparaissent sur l’équipement ou les idoles, et là où les onglets de générateur peuvent les prendre. Faites votre sélection une seule fois ici au lieu de le faire pour chaque type d’équipement.",
  "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "Retirer d’un coup un affixe des règles du filtre ouvert, des sélections des onglets de générateur et des affixes souhaités",
  "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Retire d’un coup un affixe des règles du filtre ouvert, des sélections des onglets « Progression », « Best in slot » et « Idoles » et des affixes souhaités, pour que réappliquer un onglet ne le ramène pas. Sélectionnez un affixe pour voir tous les endroits où il est utilisé ; décochez un endroit pour l’y laisser.",
+ "Elemental": "Élémentaire",
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out.": "Cochez un type d’affixes entier pour les ajouter tous d’un coup ; ce qui ne convient pas à votre build est grisé et laissé de côté.",
+ "not for your build": "pas pour votre build",
  "({n} set piece)|({n} set pieces)": {
   "one": "({n} pièce d’ensemble)",
   "other": "({n} pièces d’ensemble)"
@@ -895,5 +898,9 @@
  "{n} was there already|{n} were there already": {
   "one": "{n} y était déjà",
   "other": "{n} y étaient déjà"
+ },
+ "{n} of {total} doesn't fit your build|{n} of {total} don't fit your build": {
+  "one": "{n} sur {total} ne correspond pas à votre build",
+  "other": "{n} sur {total} ne correspondent pas à votre build"
  }
 }

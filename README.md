@@ -517,8 +517,19 @@ list for the three generators instead of one pick per kind of gear, per BiS slot
 On the right is every affix in the game that rolls on gear or on idols, grouped like the in-game
 picker and searchable, each line saying where the tabs can take it ("Helmets, Body armours · 3 idol
 kinds · Idol altar"); quick filters and *all* / *none* per category tick a whole group at once, and
-*Copy affixes* / *Paste affixes* move the list elsewhere. Tick what your build wants, then on the
-left:
+*Copy affixes* / *Paste affixes* move the list elsewhere.
+
+Chips above the list take a whole kind of affix at once - *Damage type*, *Build focus*, *Ailments*,
+*Attributes*, *Defence & utility*, *Class* - so a physical bleed build ticks *Physical*, *Bleed*,
+*Slow*, *Frailty* and *Health Leech* without hunting through the picker's groups. A chip only takes
+what the build can use: its class (from the Leveling tab, else Best in slot), the item types those
+tabs have chosen, and - for a kind of gear they've ticked nothing of yet - every one the class may
+use, so a Mage's *Physical* chip never brings in bow affixes and a Rogue who ticked Daggers stops
+getting them either. What doesn't fit stays visible in the list, greyed and marked
+*not for your build*; a chip's count is what ticking it adds, with the number it leaves out in its
+tooltip.
+
+Tick what your build wants, then on the left:
 
 - **Add to all three tabs** does the three below at once, or use one of the other buttons on its
   own.

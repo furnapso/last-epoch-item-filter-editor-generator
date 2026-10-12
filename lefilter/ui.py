@@ -30,6 +30,7 @@ from .filterdoc import parse_filter, parse_rule_blocks, render_filter
 from .filterxml import MAX_RULES, render_rule, write_filter
 from .game import find_filters_dir
 from . import bis, cleanup, idols
+from .concepts import CONCEPTS, CONCEPT_GROUPS, concept_affixes
 from .leveling import (SECTIONS, TOGGLES, class_affix_choices, class_affixes, parse_options,
                        plan_leveling, toggle_affixes)
 from .sections import IDOL_PLACEMENT, doc_infos, place, place_leveling, reorder_generated
@@ -148,6 +149,7 @@ class Api:
         # gear offer it) and the affixes it picks (the Wanted affixes tab works a toggle back out from an affix)
         toggle_picks = {c: toggle_affixes({}, d["affixes"], c, [t.key for t in TOGGLES])
                         for c in ("", *gamedata.CLASSES)}
+        concept_picks = concept_affixes(d["affixes"])
         return {
             "game_version": d.get("game_version"),
             "palette": d["palette"],
@@ -179,6 +181,12 @@ class Api:
             # the same picks as affix ids: the Wanted affixes tab ticks the toggles covering an affix it's given
             "toggle_affixes": {c: {k: [a["id"] for a in v] for k, v in picks.items()}
                                for c, picks in toggle_picks.items()},
+            # the Wanted affixes tab's build concepts: its chip bar's groups, and each chip's affixes
+            # (over every affix; which of them a build may use the editor works out from the tabs)
+            "concept_groups": [{"key": k, "label": label} for k, label in CONCEPT_GROUPS],
+            "concepts": [{"key": c.key, "label": c.label, "group": c.group,
+                          "affixes": [a["id"] for a in concept_picks[c.key]]}
+                         for c in CONCEPTS],
             "sections": {s: {"key": key, "types": types} for s, (key, types) in SECTIONS.items()},
             # set id -> {name, items, bonuses}: the picker's group by set, set items' tooltips
             "sets": {s["id"]: {"name": s["name"], "items": s.get("items", []), "bonuses": s.get("bonuses", [])} for s in d.get("sets", [])},
