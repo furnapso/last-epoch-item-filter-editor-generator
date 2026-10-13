@@ -247,9 +247,8 @@ a { color: var(--gold); }
 .concept-group { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 8px; align-items: start; }
 .concept-group .grp { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em;
   line-height: 20px; }
-/* one line per row, scrolled sideways: the seven rows stay a bar the list isn't pushed down by */
-.concept-group .chips { flex-wrap: nowrap; overflow-x: auto; gap: 3px; padding-bottom: 2px; scrollbar-width: thin; }
-.concept-bar .chip { padding: 1px 9px; flex: none; white-space: nowrap; }
+.concept-group .chips { gap: 3px; }
+.concept-bar .chip { padding: 1px 9px; }
 .concept-bar .chip.misfit { cursor: default; }
 #affix-editor .pool-cols label.nofit { opacity: .6; }
 .sticky { position: sticky; top: -10px; z-index: 2; }
