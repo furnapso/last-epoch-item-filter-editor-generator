@@ -41,6 +41,13 @@ function fill(el, ...kids) {
   return put(el, ...kids);
 }
 
+/** A bar of controls under a header line that folds it away (a <details>): open to start, and the fold is
+ *  remembered per key, so a bar you've seen costs one line from then on - the list keeps the rest. */
+function fold(key, label, child) {
+  return h("details", { class: "fold", open: store.get(`fold-${key}`, true) || null,
+    ontoggle: (e) => store.set(`fold-${key}`, e.target.open) }, h("summary", {}, label), child);
+}
+
 const store = {
   get(k, dflt) { try { const v = localStorage.getItem(k); return v == null ? dflt : JSON.parse(v); } catch { return dflt; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* private mode */ } },
@@ -4097,8 +4104,9 @@ function drawWantEditor(p) {
       + "is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage. "
       + "The Skills row offers the skills of the class your build plays.")),
     h("div", { class: "row" }, search),
-    affixFilterBar(f, pool, draw)),
-  h("div", { class: "box concept-box" }, chips),   // its own box, not the sticky one: the list keeps the pane
+    fold("want-filters", tx("Sort and filters"), affixFilterBar(f, pool, draw))),
+  h("div", { class: "box concept-box" },
+    fold("want-chips", tx("Build filters"), chips)),   // its own box, not the sticky one: the list keeps the pane
   box);
 }
 

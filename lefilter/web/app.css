@@ -243,6 +243,10 @@ a { color: var(--gold); }
 #affix-editor .pool-cols label .where { flex: 1 0 100%; color: var(--muted); font-size: 11px; }
 /* the concept chips above it: the kind of affix left, the chips right, and the ones this build can't use greyed */
 .concept-box { padding-top: 6px; }
+/* the bars that fold away: their header is a line of the section-label style, and it is the whole bar when folded */
+.fold > summary { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em;
+  line-height: 20px; margin-top: 2px; }
+.fold[open] > summary { margin-bottom: 4px; }
 .concept-bar { display: grid; gap: 3px; }
 .concept-group { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 8px; align-items: start; }
 .concept-group .grp { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em;
