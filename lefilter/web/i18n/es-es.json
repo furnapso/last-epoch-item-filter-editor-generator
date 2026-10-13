@@ -656,7 +656,6 @@
  "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "Quitar un afijo de las reglas del filtro abierto, de las selecciones de las pestañas de generador y de los afijos deseados a la vez",
  "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Quita un afijo de las reglas del filtro abierto, de las selecciones de las pestañas «Subida de nivel», «Mejor por ranura» e «Ídolos» y de los afijos deseados a la vez, para que volver a aplicar una pestaña no lo traiga de vuelta. Elige un afijo para ver dónde se usa; desmarca un sitio para dejarlo ahí.",
  "Elemental": "Elemental",
- "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out.": "Marca un tipo entero de afijos para añadirlos todos a la vez; lo que no encaje en tu build queda atenuado y fuera.",
  "not for your build": "no es para tu build",
  "({n} set piece)|({n} set pieces)": {
   "one": "({n} pieza de conjunto)",
@@ -898,8 +897,13 @@
   "one": "{n} ya estaba ahí",
   "other": "{n} ya estaban ahí"
  },
+ "{n} of {total} is left out by your other choices|{n} of {total} are left out by your other choices": {
+  "one": "{n} de {total} queda fuera por tus otras opciones",
+  "other": "{n} de {total} quedan fuera por tus otras opciones"
+ },
  "{n} of {total} doesn't fit your build|{n} of {total} don't fit your build": {
   "one": "{n} de {total} no encaja en tu build",
   "other": "{n} de {total} no encajan en tu build"
- }
+ },
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage.": "Marca un tipo entero de afijos para añadirlos todos a la vez; lo que no encaje en tu build queda atenuado y fuera. Las filas se filtran entre sí: si marcas Physical, Melee ya no añade daño de fuego."
 }

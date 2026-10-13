@@ -656,7 +656,6 @@
  "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "열린 필터의 규칙, 생성기 탭의 선택 항목, 원하는 접사에서 접사 하나를 한 번에 제거",
  "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "열린 필터의 규칙, 레벨링·최고 장비·신상 탭의 선택 항목, 원하는 접사에서 접사를 한 번에 제거하므로, 탭을 다시 적용해도 되살아나지 않습니다. 접사를 선택하면 그 접사가 사용되는 모든 곳이 표시되며, 체크를 해제한 곳에는 그대로 남습니다.",
  "Elemental": "원소",
- "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out.": "종류별 접사를 한 번에 모두 추가할 수 있습니다. 빌드에 맞지 않는 항목은 흐리게 표시되고 제외됩니다.",
  "not for your build": "빌드에 맞지 않음",
  "({n} set piece)|({n} set pieces)": {
   "other": "(세트 아이템 {n}개)"
@@ -838,7 +837,11 @@
  "{n} was there already|{n} were there already": {
   "other": "{n}개는 이미 있었음"
  },
+ "{n} of {total} is left out by your other choices|{n} of {total} are left out by your other choices": {
+  "other": "{total}개 중 {n}개가 다른 선택 때문에 제외됩니다"
+ },
  "{n} of {total} doesn't fit your build|{n} of {total} don't fit your build": {
   "other": "{total}개 중 {n}개가 빌드에 맞지 않습니다"
- }
+ },
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage.": "종류별 접사를 한 번에 모두 추가할 수 있습니다. 빌드에 맞지 않는 항목은 흐리게 표시되고 제외됩니다. 행끼리 서로 걸러집니다. Physical을 선택하면 Melee는 화염 피해를 추가하지 않습니다."
 }

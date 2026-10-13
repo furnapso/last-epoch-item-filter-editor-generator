@@ -659,7 +659,6 @@
  "Take one affix out of the open filter's rules, the generator tabs' picks and the wanted affixes at once": "Usuń jeden afiks naraz z reguł otwartego filtra, z wyboru w zakładkach generatora i z wybranych afiksów",
  "Takes an affix out of the open filter's rules, out of the Leveling, Best in slot and Idols tabs' picks and out of the wanted affixes at once, so applying a tab again doesn't bring it back. Pick an affix to see everywhere it's used; untick any place to leave it there.": "Usuwa afiks naraz z reguł otwartego filtra, z wyboru w zakładkach „Levelowanie”, „Best in slot” i „Posążki” oraz z wybranych afiksów, więc ponowne zastosowanie zakładki go nie przywróci. Wybierz afiks, żeby zobaczyć wszystkie miejsca, w których jest używany; odznacz dowolne miejsce, żeby go tam zostawić.",
  "Elemental": "Żywiołowe",
- "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out.": "Zaznacz cały rodzaj afiksów, aby dodać je naraz; to, co nie pasuje do twojego builda, jest wyszarzone i pomijane.",
  "not for your build": "nie dla twojego builda",
  "({n} set piece)|({n} set pieces)": {
   "one": "({n} element zestawu)",
@@ -1021,10 +1020,17 @@
   "many": "{n} już tam było",
   "other": "{n} już tam było"
  },
+ "{n} of {total} is left out by your other choices|{n} of {total} are left out by your other choices": {
+  "one": "{n} z {total} odpada z powodu innych twoich wyborów",
+  "few": "{n} z {total} odpadają z powodu innych twoich wyborów",
+  "many": "{n} z {total} odpada z powodu innych twoich wyborów",
+  "other": "{n} z {total} odpada z powodu innych twoich wyborów"
+ },
  "{n} of {total} doesn't fit your build|{n} of {total} don't fit your build": {
   "one": "{n} z {total} nie pasuje do twojego builda",
   "few": "{n} z {total} nie pasują do twojego builda",
   "many": "{n} z {total} nie pasuje do twojego builda",
   "other": "{n} z {total} nie pasuje do twojego builda"
- }
+ },
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage.": "Zaznacz cały rodzaj afiksów, aby dodać je naraz; to, co nie pasuje do twojego builda, jest wyszarzone i pomijane. Wiersze filtrują się nawzajem: po zaznaczeniu Physical Melee nie dodaje obrażeń od ognia."
 }

@@ -3650,13 +3650,28 @@ function renderBisEditor() {
 
 /* ---------- wanted affixes ---------- */
 
-/** This browser's list of wanted affixes: what the generator tabs take from. */
+/** This browser's list of wanted affixes and the chips that took them: what the generator tabs take from.
+ *  Older saves held just the list. */
+function wantLoad() {
+  if (S.want.loaded) return;
+  S.want.loaded = true;
+  const v = store.get("wanted-affixes", []);
+  S.want.chipKeys = Array.isArray(v) ? [] : (v.chips || []);
+  S.want.picked = (Array.isArray(v) ? v : (v.picks || [])).filter((id) => M.affix.has(id));
+}
 function wantPicks() {
-  if (!S.want.picked) S.want.picked = (store.get("wanted-affixes", []) || []).filter((id) => M.affix.has(id));
+  wantLoad();
   return S.want.picked;
 }
+function wantSavedChips() {
+  wantLoad();
+  return S.want.chipKeys;
+}
+function wantStore() {
+  store.set("wanted-affixes", { picks: S.want.picked, chips: S.want.chipKeys || [] });
+}
 function wantChanged() {
-  store.set("wanted-affixes", S.want.picked);
+  wantStore();
   if ($("#tab-affixes")?.classList.contains("active")) { renderWantList(); renderWantEditor(); }
 }
 
@@ -3870,20 +3885,67 @@ function wantApply(which) {
   toast(n ? txn(n, "{n} affix added where it can roll.", "{n} affixes added where they can roll.") : tx("Nothing to apply."));
 }
 
-/** The chip bar: a whole kind of affix at once. A chip's count is what the build can use of it - ticking
- *  adds those and leaves the rest (which don't fit the build) alone; they're greyed in the list below. */
+/** What every chip would take, for this build and these chips already ticked. A chip's own row is unioned
+ *  (Physical and Fire are both yours), but a row with chips ticked rules the other rows' chips down: an
+ *  affix that names a damage type nobody ticked is left out of Melee, while one that names no damage type
+ *  at all - "Chance to Inflict Bleed on Hit" - isn't argued with. */
+function wantChipSets(fit, selected) {
+  const pool = new Set(wantPool().map((a) => a.id));
+  const all = new Map(), usable = new Map(), takes = new Map(), said = new Map(), use = new Map();
+  for (const c of S.meta.concepts || []) {
+    const ids = c.affixes.filter((id) => pool.has(id));
+    all.set(c.key, new Set(ids));
+    usable.set(c.key, new Set(ids.filter((id) => fit.has(id))));
+    takes.set(c.key, usable.get(c.key));
+    if (!said.has(c.group)) { said.set(c.group, new Set()); use.set(c.group, new Set()); }
+    for (const id of ids) said.get(c.group).add(id);
+    if (selected.has(c.key)) for (const id of usable.get(c.key)) use.get(c.group).add(id);
+  }
+  for (const c of S.meta.concepts || []) {
+    const keep = new Set();
+    for (const id of usable.get(c.key)) {
+      let ok = true;
+      for (const [group, names] of said) {
+        if (group === c.group || !use.get(group).size || !names.has(id)) continue;
+        if (!use.get(group).has(id)) { ok = false; break; }   // another row says a value this affix doesn't have
+      }
+      if (ok) keep.add(id);
+    }
+    takes.set(c.key, keep);
+  }
+  return { all, usable, takes };
+}
+
+/** Every ticked chip's take as one set - what the chips between them have put in the list. */
+function wantChipUnion(sets, selected) {
+  const out = new Set();
+  for (const key of selected) for (const id of sets.takes.get(key) || []) out.add(id);
+  return out;
+}
+
+/** The chip bar: a whole kind of affix at once. What a chip shows is what ticking it adds - what the build
+ *  can use of that kind after the other rows have had their say; what's left out is in its tooltip. */
 function wantChips(fit, flip) {
-  const picked = new Set(wantPicks()), pool = new Set(wantPool().map((a) => a.id));
+  const selected = new Set(wantSavedChips());
+  const { all, usable, takes } = wantChipSets(fit, selected);
   const rows = [];
   for (const g of S.meta.concept_groups || []) {
     const chips = (S.meta.concepts || []).filter((c) => c.group === g.key).map((c) => {
-      const all = c.affixes.filter((id) => pool.has(id));
-      const on = all.filter((id) => fit.has(id)), off = all.length - on.length;
-      const taken = on.length && on.every((id) => picked.has(id));
-      const chip = chipToggle(tx(c.label), taken, on.length ? () => flip(on, taken) : null, String(on.length));
-      if (off) chip.title = txn(off, "{n} of {total} doesn't fit your build",
-        "{n} of {total} don't fit your build", { n: off, total: all.length });
-      if (!on.length) chip.classList.add("misfit");   // the build can use none of it: nothing to tick
+      const on = takes.get(c.key), total = all.get(c.key).size, mine = selected.has(c.key);
+      const chip = chipToggle(tx(c.label), mine, mine || on.size ? () => flip(c.key) : null, String(on.size));
+      const parts = [];
+      if (total !== usable.get(c.key).size) {   // the build can't use these at all
+        const n = total - usable.get(c.key).size;
+        parts.push(txn(n, "{n} of {total} doesn't fit your build", "{n} of {total} don't fit your build",
+          { n, total }));
+      }
+      if (usable.get(c.key).size !== on.size) {   // another row's chips ruled these out
+        const n = usable.get(c.key).size - on.size;
+        parts.push(txn(n, "{n} of {total} is left out by your other choices",
+          "{n} of {total} are left out by your other choices", { n, total }));
+      }
+      if (parts.length) chip.title = parts.join(" · ");
+      if (!mine && !on.size) chip.classList.add("misfit");   // nothing to tick: it's all ruled out
       return chip;
     });
     if (chips.length) rows.push(h("div", { class: "concept-group" }, h("span", { class: "grp" }, tx(g.label)),
@@ -3911,7 +3973,8 @@ function renderWantList() {
       h("button", { disabled: !picks.length, onclick: () => wantApply("bis") }, tx("Add to the Best in slot tab")),
       h("button", { disabled: !picks.length, onclick: () => wantApply("idols") }, tx("Add to the Idols tab"))),
     h("div", { class: "row" },
-      h("button", { disabled: !picks.length, onclick: () => { if (confirm(tx("Clear the picked affixes?"))) { S.want.picked = []; wantChanged(); } } },
+      h("button", { disabled: !picks.length, onclick: () => { if (confirm(tx("Clear the picked affixes?"))) {
+        S.want.picked = []; S.want.chipKeys = []; wantChanged(); } } },
         tx("Clear picks")),
       affixClipboardRow(picks, tx("Wanted affixes"), (ids) => {
         const pool = new Set(wantPool().map((a) => a.id));
@@ -3936,7 +3999,7 @@ function drawWantEditor(p) {
   const fit = wantFitting();   // what this build can use: the chips take those, the list greys the rest
   const chips = h("div", { class: "concept-bar" });
   const save = (redraw) => {
-    store.set("wanted-affixes", S.want.picked);
+    wantStore();
     renderWantList();
     if (redraw) renderWantEditor(); else fill(chips, wantChips(fit, flip));
   };
@@ -3956,14 +4019,16 @@ function drawWantEditor(p) {
     }
     save(true);
   };
-  /** One chip: every affix of its kind the build can use, picked or not as a whole. */
-  const flip = (ids, on) => {
-    const list = wantPicks();
-    for (const id of ids) {
-      const has = picked.has(id);
-      if (on && has) { list.splice(list.indexOf(id), 1); picked.delete(id); }
-      else if (!on && !has) { list.push(id); picked.add(id); }
-    }
+  /** One chip, as a whole: the affixes of its kind this build can use and the other rows' chips let
+   *  through. Taking them also re-settles what the other chips had taken - tick Physical before Melee
+   *  and the Melee chip then skips its fire damage, tick them the other way round and the same happens. */
+  const flip = (key) => {
+    const sel = new Set(wantSavedChips());
+    const before = wantChipUnion(wantChipSets(fit, sel), sel);
+    sel.has(key) ? sel.delete(key) : sel.add(key);
+    S.want.chipKeys = [...sel];
+    const after = wantChipUnion(wantChipSets(fit, sel), sel);
+    S.want.picked = [...new Set([...wantPicks().filter((id) => !before.has(id)), ...after])];
     save(true);
   };
   const groups = new Map();
@@ -4006,7 +4071,7 @@ function drawWantEditor(p) {
     h("p", { class: "hint" }, tx("Every affix that rolls on gear or idols, and where the generator tabs can take it. "
       + "Pick what you want once here instead of once per kind of gear.")),
     h("p", { class: "hint" }, tx("Tick a whole kind of affix to add it at once; what doesn't fit your build "
-      + "is greyed and left out.")),
+      + "is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage.")),
     chips,
     h("div", { class: "row" }, search),
     affixFilterBar(f, pool, draw)),

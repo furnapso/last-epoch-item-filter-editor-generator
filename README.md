@@ -529,6 +529,11 @@ getting them either. What doesn't fit stays visible in the list, greyed and mark
 *not for your build*; a chip's count is what ticking it adds, with the number it leaves out in its
 tooltip.
 
+The rows filter one another as well: a chip takes only what the other rows' chips don't rule out, so
+*Physical* together with *Melee* doesn't bring in *Melee Fire Damage*, in whichever order you tick
+them. An affix that says nothing about a row - no damage type in its name, no ailment - is never
+ruled out by one. The chips stay ticked alongside the list.
+
 Tick what your build wants, then on the left:
 
 - **Add to all three tabs** does the three below at once, or use one of the other buttons on its
