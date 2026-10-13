@@ -3923,6 +3923,12 @@ function wantChipUnion(sets, selected) {
   return out;
 }
 
+/** A skill chip's class, from its key ("skill_rogue_puncture"): "" for every other chip. */
+function wantSkillClass(key) {
+  const m = /^skill_([a-z]+)_/.exec(key);
+  return m ? m[1].replace(/^./, (c) => c.toUpperCase()) : "";
+}
+
 /** The classes whose skills get a chip: the build's own, else the ones its chips have ticked - the
  *  game's 136 skills all at once would be no use to anyone. */
 function wantSkillClasses() {
@@ -3935,8 +3941,7 @@ function wantSkillClasses() {
  *  class's skills neither add to the list nor hold an affix back from a chip that is shown. */
 function wantShownChips(keys) {
   const classes = wantSkillClasses();
-  return keys.filter((key) => !key.startsWith("skill_")
-    || classes.some((cls) => key.startsWith(`skill_${cls.toLowerCase()}_`)));
+  return keys.filter((key) => { const cls = wantSkillClass(key); return !cls || classes.includes(cls); });
 }
 
 /** The chip bar: a whole kind of affix at once. What a chip shows is what ticking it adds - what the build
@@ -3948,7 +3953,7 @@ function wantChips(fit, flip) {
   const rows = [];
   for (const g of S.meta.concept_groups || []) {
     const chips = (S.meta.concepts || []).filter((c) => c.group === g.key
-      && (g.key !== "skills" || classes.includes(c.label))).map((c) => {
+      && (!wantSkillClass(c.key) || classes.includes(wantSkillClass(c.key)))).map((c) => {
       const on = takes.get(c.key), total = all.get(c.key).size, mine = selected.has(c.key);
       const chip = chipToggle(tx(c.label), mine, mine || on.size ? () => flip(c.key) : null, String(on.size));
       const parts = [];
@@ -4091,9 +4096,9 @@ function drawWantEditor(p) {
     h("p", { class: "hint" }, tx("Tick a whole kind of affix to add it at once; what doesn't fit your build "
       + "is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage. "
       + "The Skills row offers the skills of the class your build plays.")),
-    chips,
     h("div", { class: "row" }, search),
     affixFilterBar(f, pool, draw)),
+  h("div", { class: "box concept-box" }, chips),   // its own box, not the sticky one: the list keeps the pane
   box);
 }
 

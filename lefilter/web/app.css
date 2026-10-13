@@ -242,12 +242,14 @@ a { color: var(--gold); }
 #affix-editor .pool-cols label { flex-wrap: wrap; }
 #affix-editor .pool-cols label .where { flex: 1 0 100%; color: var(--muted); font-size: 11px; }
 /* the concept chips above it: the kind of affix left, the chips right, and the ones this build can't use greyed */
-.concept-bar { display: grid; gap: 3px; margin: 6px 0 2px; }
+.concept-box { padding-top: 6px; }
+.concept-bar { display: grid; gap: 3px; }
 .concept-group { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 8px; align-items: start; }
 .concept-group .grp { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em;
   line-height: 20px; }
-.concept-group .chips { gap: 3px; }
-.concept-bar .chip { padding: 1px 9px; }
+/* one line per row, scrolled sideways: the seven rows stay a bar the list isn't pushed down by */
+.concept-group .chips { flex-wrap: nowrap; overflow-x: auto; gap: 3px; padding-bottom: 2px; scrollbar-width: thin; }
+.concept-bar .chip { padding: 1px 9px; flex: none; white-space: nowrap; }
 .concept-bar .chip.misfit { cursor: default; }
 #affix-editor .pool-cols label.nofit { opacity: .6; }
 .sticky { position: sticky; top: -10px; z-index: 2; }
