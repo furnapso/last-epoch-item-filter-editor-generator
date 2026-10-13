@@ -520,8 +520,10 @@ kinds · Idol altar"); quick filters and *all* / *none* per category tick a whol
 *Copy affixes* / *Paste affixes* move the list elsewhere.
 
 Chips above the list take a whole kind of affix at once - *Damage type*, *Build focus*, *Ailments*,
-*Attributes*, *Defence & utility*, *Class*, *Skills* - so a physical bleed build ticks *Physical*,
-*Bleed*, *Slow*, *Frailty* and *Health Leech* without hunting through the picker's groups. A chip only takes
+*Buffs*, *Attributes*, *Defence & utility*, *Conditions*, *Class*, *Skills* - so a physical bleed
+build ticks *Physical*, *Bleed*, *Slow*, *Frailty* and *Health Leech* without hunting through the
+picker's groups. Both bars fold to their header line when you've had enough of them (each remembers
+its own fold). A chip only takes
 what the build can use: its class (from the Leveling tab, else Best in slot), the item types those
 tabs have chosen, and - for a kind of gear they've ticked nothing of yet - every one the class may
 use, so a Mage's *Physical* chip never brings in bow affixes and a Rogue who ticked Daggers stops
@@ -541,6 +543,20 @@ classes the chips have ticked). Ticked on its own a skill takes just its own aff
 the class chip it keeps the class's affixes no skill names and drops the other skills' - a Rogue who
 plays Puncture and Shift needn't be offered *Level of Shurikens*. A skill is matched as a whole word,
 so *Net* never brings in a Network affix, and *Static* leaves Static Orb's to it.
+
+Three more rows cover what the picker never groups on its own. *Build focus* has the weapon an
+affix asks for (*Dagger*, *Sword*, *Axe*, *Mace*, *Staff*, *Shield*, *Dual wielding* - *Bow* was
+already there), so *Increased Damage while wielding a Dagger* goes to a build that wears daggers;
+*Ailments* has the four the game only shows inside the class lists (*Frostbite*, *Time Rot*,
+*Damned*, *Fear*) - a cold build ticks Frostbite without ticking Mage; *Buffs* has what a build
+keeps up rather than inflicts (*Frenzy*, *Haste*, *Inspiration*).
+
+*Conditions* is the row for an affix that only counts under something: what has to happen for it
+(*On hit*, *On kill*, *On block*, *On crit*, *On use*) and what has to be true of the build first
+(*If you have*, *Per stack*). *Health Gained on Block* is a *Health*, a *Block* and an *On block*
+chip alike, and *Increased Damage per active Shadow with Shadow Cascade* is *Per stack*, Rogue and
+Shadow Cascade. Ticked, the row holds the others back the way the damage rows do: *Health* with
+*On kill* keeps *Health On Kill* and leaves *Chance to Poison on Hit* out.
 
 Tick what your build wants, then on the left:
 

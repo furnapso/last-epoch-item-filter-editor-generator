@@ -86,6 +86,34 @@ def test_every_skill_name_is_the_games_own_word_for_it():
     assert {name for skills in SKILLS.values() for name, _ in skills} <= set(i18n.UI_GAME_TERMS)
 
 
+def test_a_weapon_chip_takes_only_the_affixes_that_need_that_weapon():
+    got = takes("dagger", "Increased Damage while wielding a Dagger", "Physical Penetration while wielding a Dagger",
+                "Increased Critical Strike Chance per Equipped Dagger", "Increased Damage while wielding a Sword")
+    assert got == {"Increased Damage while wielding a Dagger", "Physical Penetration while wielding a Dagger",
+                   "Increased Critical Strike Chance per Equipped Dagger"}
+
+
+def test_a_condition_chip_takes_only_what_needs_that_condition():
+    assert takes("on_block", "Health Gained on Block", "Block Chance", "Health on Kill") == {"Health Gained on Block"}
+    assert takes("on_kill", "Health On Kill", "Health Gained on Block") == {"Health On Kill"}
+    assert takes("per_stack", "Increased Damage per active Shadow with Shadow Cascade", "Health Regen per Second") \
+        == {"Increased Damage per active Shadow with Shadow Cascade"}
+
+
+def test_on_crit_is_whole_word_so_a_minion_crit_is_not_one():
+    assert takes("on_crit", "Chance to Cast Fire Aura on Critical Strike", "Minion Critical Strike Chance") \
+        == {"Chance to Cast Fire Aura on Critical Strike"}
+
+
+def test_the_ailment_and_buff_chips_take_what_the_picker_files_under_the_classes():
+    assert takes("frostbite", "Frostbite Duration", "Cold Penetration with Frostbite") \
+        == {"Frostbite Duration", "Cold Penetration with Frostbite"}
+    assert takes("time_rot", "Increased Time Rot Duration", "Void Damage") == {"Increased Time Rot Duration"}
+    assert takes("haste", "Haste Effect and Haste duration on Evade") == {"Haste Effect and Haste duration on Evade"}
+    assert takes("frenzy", "Frenzy and Reduced Frenzy Effect", "Level of Summon Frenzy Totem") \
+        == {"Frenzy and Reduced Frenzy Effect"}, "the skill called Frenzy Totem isn't the buff"
+
+
 def test_every_concept_has_a_label_of_a_group_the_editor_shows():
     groups = {key for key, _ in CONCEPT_GROUPS}
     assert len(groups) == len(CONCEPT_GROUPS)

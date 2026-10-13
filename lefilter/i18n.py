@@ -102,6 +102,8 @@ UI_GAME_TERMS: dict[str, str | tuple[str, str]] = {
     "Slow": "GameGuide_Panel_Slow_Tab", "Frailty": "GameGuide_Panel_Frailty_Tab", "Shock": "GameGuide_Panel_Shock_Tab",
     "Blind": "GameGuide_Panel_Blind_Tab", "Electrify": "GameGuide_Panel_Electrify_Tab",
     "Armor Shred": "GameGuide_Panel_ArmourShred_Tab", "Health Leech": "GameGuide_Panel_HealthLeech_Tab",
+    "Frostbite": "GameGuide_Panel_Frostbite_Tab", "Damned": "GameGuide_Panel_Damned_Tab",
+    "Time Rot": "GameGuide_Panel_TimeRot_Tab",
     "Health Regeneration": "StatsPanel_MainStats_HealthRegen_Name",
     "All Attributes": "QuestReward_AllAtributes_Label",
     # non-equipment flags (as the game's loot filter names them)
