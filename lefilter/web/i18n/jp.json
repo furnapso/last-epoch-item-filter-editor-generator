@@ -42,6 +42,7 @@
  "Affixes ({n} picked)": "アフィックス（{n}個選択中）",
  "Affixes each kind of gear takes, and where they roll": "装備の種類ごとのアフィックスと、それが付く場所",
  "Ailment chance": "状態効果付与率",
+ "Skills": "スキル",
  "Stun": "スタン",
  "All": "すべて",
  "All Attributes - two-handers only": "全能力値 - 両手武器のみ",
@@ -843,5 +844,5 @@
  "{n} of {total} doesn't fit your build|{n} of {total} don't fit your build": {
   "other": "{total}個中{n}個がビルドに合いません"
  },
- "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage.": "種類ごとのアフィックスをすべて一度に追加できます。ビルドに合わないものは薄く表示され、追加されません。 各行は互いに絞り込まれます。Physical を選ぶと、Melee は炎ダメージを追加しなくなります。"
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage. The Skills row offers the skills of the class your build plays.": "種類ごとのアフィックスをすべて一度に追加できます。ビルドに合わないものは薄く表示され、追加されません。 各行は互いに絞り込まれます。Physical を選ぶと、Melee は炎ダメージを追加しなくなります。 スキルの行には、ビルドのクラスのスキルが並びます。"
 }

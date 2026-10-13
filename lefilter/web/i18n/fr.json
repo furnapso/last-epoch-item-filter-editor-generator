@@ -42,6 +42,7 @@
  "Affixes ({n} picked)": "Affixes (sélectionnés : {n})",
  "Affixes each kind of gear takes, and where they roll": "Affixes que prend chaque catégorie d’équipement, et où ils apparaissent",
  "Ailment chance": "Chance d’affection",
+ "Skills": "Compétences",
  "Stun": "Étourdissement",
  "All": "Tout",
  "All Attributes - two-handers only": "Tous les attributs – armes à deux mains uniquement",
@@ -906,5 +907,5 @@
   "one": "{n} sur {total} ne correspond pas à votre build",
   "other": "{n} sur {total} ne correspondent pas à votre build"
  },
- "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage.": "Cochez un type d’affixes entier pour les ajouter tous d’un coup ; ce qui ne convient pas à votre build est grisé et laissé de côté. Les lignes se filtrent entre elles : Physical coché, Melee n’ajoute plus ses dégâts de feu."
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage. The Skills row offers the skills of the class your build plays.": "Cochez un type d’affixes entier pour les ajouter tous d’un coup ; ce qui ne convient pas à votre build est grisé et laissé de côté. Les lignes se filtrent entre elles : Physical coché, Melee n’ajoute plus ses dégâts de feu. La ligne Compétences propose les compétences de la classe de votre build."
 }

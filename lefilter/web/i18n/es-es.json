@@ -42,6 +42,7 @@
  "Affixes ({n} picked)": "Afijos ({n} seleccionados)",
  "Affixes each kind of gear takes, and where they roll": "Afijos que admite cada tipo de equipo y dónde aparecen",
  "Ailment chance": "Probabilidad de estado alterado",
+ "Skills": "Habilidades",
  "Stun": "Aturdimiento",
  "All": "Todo",
  "All Attributes - two-handers only": "Todos los atributos: solo armas de dos manos",
@@ -905,5 +906,5 @@
   "one": "{n} de {total} no encaja en tu build",
   "other": "{n} de {total} no encajan en tu build"
  },
- "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage.": "Marca un tipo entero de afijos para añadirlos todos a la vez; lo que no encaje en tu build queda atenuado y fuera. Las filas se filtran entre sí: si marcas Physical, Melee ya no añade daño de fuego."
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage. The Skills row offers the skills of the class your build plays.": "Marca un tipo entero de afijos para añadirlos todos a la vez; lo que no encaje en tu build queda atenuado y fuera. Las filas se filtran entre sí: si marcas Physical, Melee ya no añade daño de fuego. La fila Habilidades ofrece las habilidades de la clase de tu build."
 }

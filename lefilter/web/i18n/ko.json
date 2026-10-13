@@ -42,6 +42,7 @@
  "Affixes ({n} picked)": "접사 ({n}개 선택)",
  "Affixes each kind of gear takes, and where they roll": "장비 종류별로 받는 접사와 그 접사가 붙는 곳",
  "Ailment chance": "상태 이상 확률",
+ "Skills": "스킬",
  "Stun": "기절",
  "All": "전체",
  "All Attributes - two-handers only": "모든 능력치 - 양손 무기 전용",
@@ -843,5 +844,5 @@
  "{n} of {total} doesn't fit your build|{n} of {total} don't fit your build": {
   "other": "{total}개 중 {n}개가 빌드에 맞지 않습니다"
  },
- "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage.": "종류별 접사를 한 번에 모두 추가할 수 있습니다. 빌드에 맞지 않는 항목은 흐리게 표시되고 제외됩니다. 행끼리 서로 걸러집니다. Physical을 선택하면 Melee는 화염 피해를 추가하지 않습니다."
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage. The Skills row offers the skills of the class your build plays.": "종류별 접사를 한 번에 모두 추가할 수 있습니다. 빌드에 맞지 않는 항목은 흐리게 표시되고 제외됩니다. 행끼리 서로 걸러집니다. Physical을 선택하면 Melee는 화염 피해를 추가하지 않습니다. 스킬 행에는 빌드의 직업에 딸린 스킬이 표시됩니다."
 }

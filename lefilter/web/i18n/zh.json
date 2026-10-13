@@ -42,6 +42,7 @@
  "Affixes ({n} picked)": "词缀（已选 {n} 条）",
  "Affixes each kind of gear takes, and where they roll": "各类装备选用的词缀及其出现位置",
  "Ailment chance": "异常状态几率",
+ "Skills": "技能",
  "Stun": "晕眩",
  "All": "全部",
  "All Attributes - two-handers only": "所有属性——仅限双手武器",
@@ -843,5 +844,5 @@
  "{n} of {total} doesn't fit your build|{n} of {total} don't fit your build": {
   "other": "{total} 个中有 {n} 个不适合你的构筑"
  },
- "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage.": "勾选一整类词缀即可一次全部添加；不符合你构筑的会灰显并被排除。 各行会相互筛选：勾选 Physical 后，Melee 不会再加入火焰伤害。"
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage. The Skills row offers the skills of the class your build plays.": "勾选一整类词缀即可一次全部添加；不符合你构筑的会灰显并被排除。 各行会相互筛选：勾选 Physical 后，Melee 不会再加入火焰伤害。 技能一行提供你所玩职业的技能。"
 }

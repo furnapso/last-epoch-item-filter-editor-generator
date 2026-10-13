@@ -8,17 +8,22 @@ Physical, Bleed, Slow, Frailty and Health Leech without hunting for them.
 
 A concept takes an affix by a phrase in its name or a picker category taken whole (the "Leech"
 category, under the Health Leech chip); a class concept takes the class's own affixes - the ones only
-it may have. The name is the one the editor shows, not the affix asset's: a few corrupted affixes
-carry a completely different asset name (a leftover from how they were extracted), which would put
-them in the wrong chips. Which of them a build may use at all - its class, the item types it wears,
-the idol kinds it works with - the editor works out from the tabs' settings, and the chips skip what
-the build can't carry.
+it may have; a skill concept the affixes naming that skill as a whole word ("Net" is a Rogue skill,
+not a Network affix). Skills are the class's own, from the game's "Level of <skill>" affixes, so the
+Skills row holds the ones of the class the build plays: tick Puncture there and the Rogue chip keeps
+the affixes no skill names but drops the other skills'. The name is the one the editor shows, not the
+affix asset's: a few corrupted affixes carry a completely different asset name (a leftover from how
+they were extracted), which would put them in the wrong chips. Which of them a build may use at all -
+its class, the item types it wears, the idol kinds it works with - the editor works out from the
+tabs' settings, and the chips skip what the build can't carry.
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
+from functools import lru_cache
 
-from .gamedata import AFFIX_CLASS_BITS, AFFIX_NONSPECIFIC, CLASSES
+from .gamedata import AFFIX_CLASS_BITS, AFFIX_NONSPECIFIC, CLASSES, SKILL_ALIASES, SKILLS
 from .leveling import ATTRIBUTES
 
 
@@ -31,6 +36,7 @@ class Concept:
     categories: tuple[str, ...] = ()   # affix-picker categories taken whole
     exclude: tuple[str, ...] = ()      # lower-case substrings that disqualify
     only: str = ""                     # a class: only its own affixes ("" = every class's)
+    whole: bool = False                # phrases are whole words, not substrings (a skill's "Net" is no "Network")
 
 
 CONCEPT_GROUPS = (
@@ -40,6 +46,7 @@ CONCEPT_GROUPS = (
     ("attributes", "Attributes"),
     ("defence", "Defence & utility"),
     ("class", "Class"),
+    ("skills", "Skills"),
 )
 
 
@@ -63,6 +70,28 @@ def _attribute(key: str) -> Concept:
 def _defence(key: str, label: str, phrases: tuple[str, ...] = (), categories: tuple[str, ...] = (),
              exclude: tuple[str, ...] = ()) -> Concept:
     return Concept(key, label, "defence", phrases, categories, exclude)
+
+
+@lru_cache(maxsize=None)
+def _word(phrase: str) -> re.Pattern[str]:
+    """A skill's name as a whole word: "Net" is a Rogue skill, not a Network affix."""
+    return re.compile(rf"(?<!\w){re.escape(phrase)}(?!\w)")
+
+
+def _skill_concepts() -> tuple[Concept, ...]:
+    """One chip per class skill, taking the affixes that name it as a whole word (with the spellings
+    an affix gives it), and leaving the ones naming a longer skill to it - "Static" skips Static Orb's."""
+    def slug(name: str) -> str:
+        return re.sub(r"\W+", "_", name.lower()).strip("_")
+    out = []
+    for cls in CLASSES:
+        longer = {name: tuple(o.lower() for o, _ in SKILLS[cls] if o != name and _word(name.lower()).search(o.lower()))
+                  for name, _ in SKILLS[cls]}
+        out += [Concept(f"skill_{cls.lower()}_{slug(name)}", name, "skills",
+                        (name.lower(), *(a.lower() for a in SKILL_ALIASES.get(name, ()))),
+                        exclude=longer[name], whole=True)
+                for name, _ in SKILLS[cls]]
+    return tuple(out)
 
 
 CONCEPTS = (
@@ -113,6 +142,10 @@ CONCEPTS = (
     _defence("cooldown", "Cooldown recovery", ("cooldown",), ("Cooldown",)),
     # a class: its own affixes - the picker's category, its idols', and the ones only it may have
     *(Concept(c.lower(), c, "class", only=c) for c in CLASSES),
+    # one chip per class skill: the affixes that name it ("Level of Puncture", "Physical Penetration
+    # with Puncture"). A row of its own, so ticking Puncture narrows the class chip to it plus the
+    # affixes no skill names - while ticked alone it takes just those.
+    *_skill_concepts(),
 )
 
 
@@ -122,7 +155,8 @@ def _matches(c: Concept, a: dict, name: str) -> bool:
     if c.only:
         bit = AFFIX_CLASS_BITS[c.only]
         return bool(a["class"] & bit) and not (a["class"] & AFFIX_NONSPECIFIC)
-    hit = any(p in name for p in c.phrases) or a["category"] in c.categories
+    hit = (any(_word(p).search(name) for p in c.phrases) if c.whole else any(p in name for p in c.phrases)) \
+        or a["category"] in c.categories
     return hit and not any(x in name for x in c.exclude)
 
 

@@ -18,6 +18,7 @@ import re
 from pathlib import Path
 
 from . import affixtext
+from .gamedata import SKILLS
 
 TEXT_TABLES = ("Item_Affixes", "Descriptors", "Common")
 TABLES = ("Item_Names", *TEXT_TABLES, "UI")
@@ -74,6 +75,9 @@ UI_GAME_TERMS: dict[str, str | tuple[str, str]] = {
     "Primalist": "MultiSelection_Header_Primalist", "Mage": "MultiSelection_Header_Mage", "Sentinel": "MultiSelection_Header_Sentinel",
     "Acolyte": "MultiSelection_Header_Acolyte", "Rogue": "MultiSelection_Header_Rogue",
     "All classes": ("MultiSelection_Header_All Classes", "All Classes"),
+    # the class skills: the Wanted affixes tab's Skills row, one chip per skill of the build's class.
+    # Each has its own key in the Descriptors table - the game's own name for it in all nine languages.
+    **{name: key for skills in SKILLS.values() for name, key in skills},
     "Circle of Fortune": "Factions_CircleofFortuneName", "Merchant's Guild": "Factions_MerchantGuildName",
     "Forgotten Knights": "Factions_ForgottenKnightsName", "Omen": "CircleOfFortune_ProphecyTarget_3",
     # tooltips
@@ -224,7 +228,9 @@ def build_language(tables: dict[str, dict[str, str]], data: dict, code: str = ""
         texts = [affixtext.resolve(line.get("source"), tables, words, prefs) for line in a.get("lines", [])]
         if any(texts):
             out["lines"][a["id"]] = texts   # None: no entry - the English text stays
-    out["ui"] = ui_terms(ui_en or {}, tables["UI"], code)
+    # the game's own words for the editor's texts that are its terms: from the UI table, and from
+    # Descriptors, which holds the class skills' names
+    out["ui"] = ui_terms(ui_en or {}, {**tables["UI"], **tables["Descriptors"]}, code)
     return out
 
 
@@ -237,7 +243,9 @@ def write_languages(locales: list[tuple[str, str, Path]], shared: Path, data: di
     languages = []
     en = next((bundle for code, _, bundle in locales if code == "en"), None)
     try:
-        ui_en = {k: clean(v) for k, v in read_string_tables(en, shared, ("UI",))["UI"].items()} if en else {}
+        # the UI table, and Descriptors - which holds the class skills' names, their own key each
+        ui_en = {k: clean(v) for t in read_string_tables(en, shared, ("UI", "Descriptors")).values()
+                 for k, v in t.items()} if en else {}
     except Exception as e:   # the languages still get the game's names, the editor's texts its own catalog
         ui_en = {}
         if warnings is not None:

@@ -520,8 +520,8 @@ kinds · Idol altar"); quick filters and *all* / *none* per category tick a whol
 *Copy affixes* / *Paste affixes* move the list elsewhere.
 
 Chips above the list take a whole kind of affix at once - *Damage type*, *Build focus*, *Ailments*,
-*Attributes*, *Defence & utility*, *Class* - so a physical bleed build ticks *Physical*, *Bleed*,
-*Slow*, *Frailty* and *Health Leech* without hunting through the picker's groups. A chip only takes
+*Attributes*, *Defence & utility*, *Class*, *Skills* - so a physical bleed build ticks *Physical*,
+*Bleed*, *Slow*, *Frailty* and *Health Leech* without hunting through the picker's groups. A chip only takes
 what the build can use: its class (from the Leveling tab, else Best in slot), the item types those
 tabs have chosen, and - for a kind of gear they've ticked nothing of yet - every one the class may
 use, so a Mage's *Physical* chip never brings in bow affixes and a Rogue who ticked Daggers stops
@@ -533,6 +533,14 @@ The rows filter one another as well: a chip takes only what the other rows' chip
 *Physical* together with *Melee* doesn't bring in *Melee Fire Damage*, in whichever order you tick
 them. An affix that says nothing about a row - no damage type in its name, no ailment - is never
 ruled out by one. The chips stay ticked alongside the list.
+
+*Skills* is the class's own row: one chip per skill, taking the affixes that name it (*Level of
+Puncture*, *Physical Penetration with Puncture*) - the game's 136 skills, so the row offers only the
+ones of the class the build plays (from the Leveling tab, else Best in slot; with neither, the
+classes the chips have ticked). Ticked on its own a skill takes just its own affixes; ticked next to
+the class chip it keeps the class's affixes no skill names and drops the other skills' - a Rogue who
+plays Puncture and Shift needn't be offered *Level of Shurikens*. A skill is matched as a whole word,
+so *Net* never brings in a Network affix, and *Static* leaves Static Orb's to it.
 
 Tick what your build wants, then on the left:
 

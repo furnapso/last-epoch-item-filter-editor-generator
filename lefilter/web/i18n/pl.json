@@ -43,6 +43,7 @@
  "Affixes ({n} picked)": "Afiksy (wybrano: {n})",
  "Affixes each kind of gear takes, and where they roll": "Afiksy, które przyjmuje każdy rodzaj ekwipunku, i gdzie występują",
  "Ailment chance": "Szansa na dolegliwości",
+ "Skills": "Umiejętności",
  "Stun": "Ogłuszenie",
  "All": "Wszystko",
  "All Attributes - two-handers only": "Wszystkie atrybuty – tylko broń dwuręczna",
@@ -1032,5 +1033,5 @@
   "many": "{n} z {total} nie pasuje do twojego builda",
   "other": "{n} z {total} nie pasuje do twojego builda"
  },
- "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage.": "Zaznacz cały rodzaj afiksów, aby dodać je naraz; to, co nie pasuje do twojego builda, jest wyszarzone i pomijane. Wiersze filtrują się nawzajem: po zaznaczeniu Physical Melee nie dodaje obrażeń od ognia."
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage. The Skills row offers the skills of the class your build plays.": "Zaznacz cały rodzaj afiksów, aby dodać je naraz; to, co nie pasuje do twojego builda, jest wyszarzone i pomijane. Wiersze filtrują się nawzajem: po zaznaczeniu Physical Melee nie dodaje obrażeń od ognia. Wiersz Umiejętności oferuje umiejętności klasy twojego builda."
 }

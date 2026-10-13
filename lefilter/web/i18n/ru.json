@@ -42,6 +42,7 @@
  "Affixes ({n} picked)": "Аффиксы (выбрано {n})",
  "Affixes each kind of gear takes, and where they roll": "Аффиксы для каждого вида снаряжения и где они выпадают",
  "Ailment chance": "Шанс наложения хворей",
+ "Skills": "Умения",
  "Stun": "Оглушение",
  "All": "Все",
  "All Attributes - two-handers only": "Все характеристики — только двуручное оружие",
@@ -1030,5 +1031,5 @@
   "many": "{n} из {total} не подходят вашей сборке",
   "other": "{n} из {total} не подходят вашей сборке"
  },
- "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage.": "Отметьте целый вид аффиксов, чтобы добавить их сразу; то, что не подходит вашей сборке, затемнено и не берётся. Строки фильтруют друг друга: отмеченный Physical не даёт Melee добавить огновой урон."
+ "Tick a whole kind of affix to add it at once; what doesn't fit your build is greyed and left out. The rows filter each other: tick Physical and Melee won't bring in fire damage. The Skills row offers the skills of the class your build plays.": "Отметьте целый вид аффиксов, чтобы добавить их сразу; то, что не подходит вашей сборке, затемнено и не берётся. Строки фильтруют друг друга: отмеченный Physical не даёт Melee добавить огновой урон. Строка «Умения» предлагает умения класса вашей сборки."
 }

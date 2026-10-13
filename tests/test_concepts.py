@@ -1,9 +1,11 @@
 """The Wanted affixes tab's build concepts: what its chips take, and that the editor can label them."""
 from pathlib import Path
+import re
 import sys
 
+from lefilter import i18n
 from lefilter.concepts import CONCEPTS, CONCEPT_GROUPS, concept_affixes
-from lefilter.gamedata import AFFIX_CLASS_BITS, AFFIX_NONSPECIFIC
+from lefilter.gamedata import AFFIX_CLASS_BITS, AFFIX_NONSPECIFIC, SKILLS
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "packaging"))
@@ -52,6 +54,36 @@ def test_a_class_concept_takes_only_the_classs_own_affixes():
     assert [a["name"] for a in got["rogue"]] == ["Rogue Skill", "Rogue Idol Affix"]
     assert [a["name"] for a in got["mage"]] == ["Mage Skill"]
     assert got["sentinel"] == []
+
+
+def test_a_skill_chip_takes_the_affixes_naming_that_skill_as_a_whole_word():
+    got = takes("skill_rogue_net", "Level of Net", "Increased Net Damage", "Magnetic Network")
+    assert got == {"Level of Net", "Increased Net Damage"}, "Network isn't the Rogue's Net skill"
+
+
+def test_a_skill_leaves_the_longer_one_it_sits_inside_to_it():
+    assert takes("skill_mage_static", "Level of Static", "Level of Static Orb") == {"Level of Static"}
+    assert takes("skill_mage_static_orb", "Level of Static", "Level of Static Orb") == {"Level of Static Orb"}
+
+
+def test_a_skill_takes_the_spellings_the_affixes_give_it():
+    assert takes("skill_mage_frost_wall", "Level of Frostwall", "Frost Wall Duration") \
+        == {"Level of Frostwall", "Frost Wall Duration"}
+    assert takes("skill_rogue_synchronized_strike", "Mana Efficiency with Synchronised Strike") \
+        == {"Mana Efficiency with Synchronised Strike"}
+
+
+def test_every_class_skill_gets_a_chip_of_its_own():
+    def slug(name):
+        return re.sub(r"\W+", "_", name.lower()).strip("_")
+    want = {(f"skill_{cls.lower()}_{slug(name)}", name) for cls in SKILLS for name, _ in SKILLS[cls]}
+    assert {(c.key, c.label) for c in CONCEPTS if c.group == "skills"} == want
+
+
+def test_every_skill_name_is_the_games_own_word_for_it():
+    """The chips' label comes from the game's Descriptors table, one key each - and so all nine languages."""
+    assert all(name == name.strip() and key for skills in SKILLS.values() for name, key in skills)
+    assert {name for skills in SKILLS.values() for name, _ in skills} <= set(i18n.UI_GAME_TERMS)
 
 
 def test_every_concept_has_a_label_of_a_group_the_editor_shows():
